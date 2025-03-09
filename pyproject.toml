@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "aed-dbt"
+version = "0.1.0"
+description = ""
+authors = ["Lucas Alves <lucasalves_taz@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+python-dotenv = "^1.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
