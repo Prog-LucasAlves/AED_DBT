@@ -57,6 +57,7 @@ default:
 ```
 
 - 📌 Explicação de Cada Parâmetro
+
 | Parâmetro | Descrição |
 | --------- | --------- |
 | default | Nome do perfil de conexão (deve bater com o `dbt_project.yml`) |
