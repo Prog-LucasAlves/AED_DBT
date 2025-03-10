@@ -107,6 +107,7 @@ models:
 
 O DBT organiza os modelos em subpastas, e cada uma pode ter configurações diferentes.
 No exemplo acima, temos dois grupos de modelos:
+
 ✅ **Staging** (pré-processamento)
 ✅ **Marts** (modelo final consolidados)
 
@@ -135,10 +136,10 @@ marts:
 
 - 🛠 Tipos de `+materialized`
 
-- `view` ->  O modelo não é armazenado no banco, apenas uma consulta SQL dinâmica
-- `table` -> O modelo gera uma tabela física no banco de dados
-- `incremental` ->  O modelo é atualizado incrementalmente para otimizar performance
-- `ephemeral` -> Modelo temporário (não armazenado no banco)
+1. `view` ->  O modelo não é armazenado no banco, apenas uma consulta SQL dinâmica
+2. `table` -> O modelo gera uma tabela física no banco de dados
+3. `incremental` ->  O modelo é atualizado incrementalmente para otimizar performance
+4. `ephemeral` -> Modelo temporário (não armazenado no banco)
 
 - 🔥 Dicas para Configurar o `dbt_project.yml`
 
