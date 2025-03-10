@@ -172,21 +172,40 @@ A pasta models/staging/ no DBT contém os modelos intermediários, que servem co
 O Modelo `smart_vendas`consolida as vendas por cliente.
 
 ```sql
+-- Total de de pedidos por cliente com status de 'aprovado' e valor total dos pedidos
 WITH pedidos AS (
     SELECT * FROM {{ ref('stg_pedidos') }}
 ),
 clientes AS (
     SELECT * FROM {{ ref('stg_clientes') }}
 ),
-vendas AS (
+mart_vendas_r1 AS (
     SELECT
         c.id_cliente AS id_cliente,
         c.primeiro_nome AS cliente,
-        COUNT(p.id_cliente) AS total_pedidos,
-        SUM(CASE WHEN p.status = 'aprovado' THEN p.total ELSE 0 END) AS total_vendido
+        p.forma_pagamento AS forma_pagamento,
+        p.status AS status_pedido,
+        COUNT(p.id_cliente) AS total_qtd_pedidos,
+        SUM(p.total) AS total_vendas
     FROM pedidos p
     JOIN clientes c ON p.id_cliente = c.id_cliente
-    GROUP BY c.id_cliente, c.primeiro_nome
+    WHERE p.status = 'aprovado'
+    GROUP BY c.id_cliente, c.primeiro_nome, p.forma_pagamento, p.status
 )
-SELECT * FROM vendas
+SELECT * FROM mart_vendas_r1
 ```
+
+## ✅ Objetivos do Projeto
+
+- ✔️ Simular dados realistas de vendas
+- ✔️ Aplicar boas práticas no DBT
+- ✔️ Criar um pipeline de dados eficiente com PostgreSQL
+- ✔️ Automatizar a modelagem e agregação de dados
+
+Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. 😃🚀
+
+##
+
+## 📜 Licença
+
+- Este projeto está sob a licença [MIT](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/LICENSE).
