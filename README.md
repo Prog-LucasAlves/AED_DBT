@@ -108,8 +108,8 @@ models:
 O DBT organiza os modelos em subpastas, e cada uma pode ter configurações diferentes.
 No exemplo acima, temos dois grupos de modelos:
 
-✅ **Staging** (pré-processamento)
-✅ **Marts** (modelo final consolidados)
+- ✅ **Staging** (pré-processamento)
+- ✅ **Marts** (modelo final consolidados)
 
 🔹 Configuração do `staging`:
 
@@ -143,11 +143,11 @@ marts:
 
 - 🔥 Dicas para Configurar o `dbt_project.yml`
 
-- ✅ O `profile` no `dbt_project.yml` deve bater com o `profiles.yml`.
-- ✅ Separe os modelos em staging e marts para organização.
-- ✅ Se o modelo for atualizado com frequência, use `view`.
-- ✅ Para dados agregados consolidados, use `table`.
-- ✅ Use `incremental` se o dataset for grande e precisar de eficiência.
+1. ✅ O `profile` no `dbt_project.yml` deve bater com o `profiles.yml`.
+2. ✅ Separe os modelos em staging e marts para organização.
+3. ✅ Se o modelo for atualizado com frequência, use `view`.
+4. ✅ Para dados agregados consolidados, use `table`.
+5. ✅ Use `incremental` se o dataset for grande e precisar de eficiência.
 
 ### 🔹 4. Gerar Dados Fictícios
 
