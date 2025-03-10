@@ -97,3 +97,95 @@ models:
 
 | Parâmetro | Descrição |
 | --------- | --------- |
+| `name` | Nome do projeto DBT (deve ser único e sem espaços) |
+| `version` | Versão do projeto (ajuda no controle de versões) |
+| `config-version` | Versão da configuração DBT (sempre use `2` para projetos novos) |
+| `profile` | Nome do perfil de conexão usado (`profiles.yml` deve ter esse nome) |
+| `models` | Define configurações para os modelos do DBT |
+
+- 📂 Explicação das Configurações de Modelos
+
+O DBT organiza os modelos em subpastas, e cada uma pode ter configurações diferentes.
+No exemplo acima, temos dois grupos de modelos:
+✅ **Staging** (pré-processamento)
+✅ **Marts** (modelo final consolidados)
+
+🔹 Configuração do `staging`:
+
+```yaml
+staging:
+  +schema: staging
+  +materialized: view
+```
+
+🔹 Configuração do `marts`:
+
+```yaml
+marts:
+  +schema: marts
+  +materialized: table
+```
+
+- 📌 O que esses parâmetros fazem?
+
+| Configuração | Descrição |
+| ------------ | --------- |
+| `+schema` | Define um esquema separado no banco de dados para os modelos |
+| `+materialized` | Define como o modelo será salvo (view ou table) |
+
+- 🛠 Tipos de `+materialized`
+
+- `view` ->  O modelo não é armazenado no banco, apenas uma consulta SQL dinâmica
+- `table` -> O modelo gera uma tabela física no banco de dados
+- `incremental` ->  O modelo é atualizado incrementalmente para otimizar performance
+- `ephemeral` -> Modelo temporário (não armazenado no banco)
+
+- 🔥 Dicas para Configurar o `dbt_project.yml`
+
+- ✅ O `profile` no `dbt_project.yml` deve bater com o `profiles.yml`.
+- ✅ Separe os modelos em staging e marts para organização.
+- ✅ Se o modelo for atualizado com frequência, use `view`.
+- ✅ Para dados agregados consolidados, use `table`.
+- ✅ Use `incremental` se o dataset for grande e precisar de eficiência.
+
+### 🔹 4. Gerar Dados Fictícios
+
+Execute o script para popular o banco:
+
+```bash
+python gerar_dados.py
+```
+
+### 🔹 5. Rodar os Modelos DBT
+
+```bash
+dbt run          # Executar as transformações
+```
+
+## 📄 Descrição da Pasta models/staging/
+
+A pasta models/staging/ no DBT contém os modelos intermediários, que servem como uma camada de preparação antes da modelagem final. Esses modelos limpam, padronizam e organizam os dados brutos antes de serem usados em modelos analíticos (marts).
+
+## 📊 Modelo mart_vendas.sql
+
+O Modelo `smart_vendas`consolida as vendas por cliente.
+
+```sql
+WITH pedidos AS (
+    SELECT * FROM {{ ref('stg_pedidos') }}
+),
+clientes AS (
+    SELECT * FROM {{ ref('stg_clientes') }}
+),
+vendas AS (
+    SELECT
+        c.id_cliente AS id_cliente,
+        c.primeiro_nome AS cliente,
+        COUNT(p.id_cliente) AS total_pedidos,
+        SUM(CASE WHEN p.status = 'aprovado' THEN p.total ELSE 0 END) AS total_vendido
+    FROM pedidos p
+    JOIN clientes c ON p.id_cliente = c.id_cliente
+    GROUP BY c.id_cliente, c.primeiro_nome
+)
+SELECT * FROM vendas
+```
