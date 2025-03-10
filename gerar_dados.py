@@ -20,32 +20,32 @@ fake = Faker("pt_BR")
 
 clientes = pd.DataFrame(
     {
-        "id_cliente": [fake.unique.ean13(prefixes=("00",)) for _ in range(1, 100000)],
-        "primeiro_nome": [fake.first_name() for _ in range(1, 100000)],
-        "segundo_nome": [fake.last_name() for _ in range(1, 100000)],
-        "email": [fake.unique.email() for _ in range(1, 100000)],
-        "cidade": [fake.city() for _ in range(1, 100000)],
-        "estado": [fake.state() for _ in range(1, 100000)],
+        "id_cliente": [fake.unique.ean13(prefixes=("00",)) for _ in range(1, 200000)],
+        "primeiro_nome": [fake.first_name() for _ in range(1, 200000)],
+        "segundo_nome": [fake.last_name() for _ in range(1, 200000)],
+        "email": [fake.unique.email() for _ in range(1, 200000)],
+        "cidade": [fake.city() for _ in range(1, 200000)],
+        "estado": [fake.state() for _ in range(1, 200000)],
         "cep": [
             fake.bothify(text="?????-###", letters="0123456789")
-            for _ in range(1, 100000)
+            for _ in range(1, 200000)
         ],
-        "telefone": [fake.bothify(text="(0##) 9####-####") for _ in range(1, 100000)],
-        "endereco": [fake.address() for _ in range(1, 100000)],
-        "cpf": [fake.unique.cpf() for _ in range(1, 100000)],
-        "rg": [fake.unique.rg() for _ in range(1, 100000)],
+        "telefone": [fake.bothify(text="(0##) 9####-####") for _ in range(1, 200000)],
+        "endereco": [fake.address() for _ in range(1, 200000)],
+        "cpf": [fake.unique.cpf() for _ in range(1, 200000)],
+        "rg": [fake.unique.rg() for _ in range(1, 200000)],
         "data_nascimento": [
-            fake.date_of_birth(minimum_age=18, maximum_age=80) for _ in range(1, 100000)
+            fake.date_of_birth(minimum_age=18, maximum_age=80) for _ in range(1, 200000)
         ],
         "sexo": [
-            fake.random_element(["Masculino", "Feminino"]) for _ in range(1, 100000)
+            fake.random_element(["Masculino", "Feminino"]) for _ in range(1, 200000)
         ],
         "estado_civil": [
             fake.random_element(["Solteiro", "Casado", "Divorciado", "Viúvo"])
-            for _ in range(1, 100000)
+            for _ in range(1, 200000)
         ],
-        "profissao": [fake.job() for _ in range(1, 100000)],
-        "data_cadastro": [fake.date_this_decade() for _ in range(1, 100000)],
+        "profissao": [fake.job() for _ in range(1, 200000)],
+        "data_cadastro": [fake.date_this_decade() for _ in range(1, 200000)],
     }
 )
 
@@ -53,26 +53,26 @@ LIST_ID_CLIENTE = clientes["id_cliente"].tolist()
 
 pedidos = pd.DataFrame(
     {
-        "data_pedido": [fake.date_this_year() for _ in range(1, 100000)],
-        "id_cliente": [fake.random_element(LIST_ID_CLIENTE) for _ in range(1, 100000)],
+        "data_pedido": [fake.date_this_year() for _ in range(1, 200000)],
+        "id_cliente": [fake.random_element(LIST_ID_CLIENTE) for _ in range(1, 200000)],
         "id_pedido": [
             fake.bothify(text="#:???-##########", letters="ABCDEF")
-            for _ in range(1, 100000)
+            for _ in range(1, 200000)
         ],
-        "quantidade": [fake.random_int(min=1, max=10) for _ in range(1, 100000)],
+        "quantidade": [fake.random_int(min=1, max=10) for _ in range(1, 200000)],
         "valor": [
             round(fake.pyfloat(min_value=15, max_value=1000, right_digits=2), 2)
-            for _ in range(1, 100000)
+            for _ in range(1, 200000)
         ],
         "forma_pagamento": [
             fake.random_element(
                 ["Cartão de Crédito", "Cartão de Débito", "Boleto", "Pix"]
             )
-            for _ in range(1, 100000)
+            for _ in range(1, 200000)
         ],
         "status": [
             fake.random_element(["pendente", "aprovado", "cancelado"])
-            for _ in range(1, 100000)
+            for _ in range(1, 200000)
         ],
     }
 )
