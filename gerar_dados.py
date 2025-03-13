@@ -1,9 +1,12 @@
 import os
+import random
 
 import pandas as pd
 from dotenv import load_dotenv
 from faker import Faker
-from sqlalchemy import create_engine
+from sqlalchemy import (Column, Date, Float, ForeignKey, Integer, String,
+                        create_engine)
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 load_dotenv()
 
@@ -12,129 +15,320 @@ USER = os.getenv("DATABASE_USER")
 PASSWORD = os.getenv("DATABASE_PASSWORD")
 HOST = os.getenv("DATABASE_HOST")
 
+# Configuração do banco de dados
 DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432/{DATABASE}"
+engine = create_engine(DATABASE_URL)
+Session = sessionmaker(bind=engine)
+session = Session()
+Base = declarative_base()
 
-engine = create_engine(DATABASE_URL, echo=True)
-
+# Inicialização do Faker
 fake = Faker("pt_BR")
 
-clientes = pd.DataFrame(
-    {
-        "id_cliente": [fake.unique.ean13(prefixes=("00",)) for _ in range(1, 200000)],
-        "primeiro_nome": [fake.first_name() for _ in range(1, 200000)],
-        "segundo_nome": [fake.last_name() for _ in range(1, 200000)],
-        "email": [fake.unique.email() for _ in range(1, 200000)],
-        "cidade": [fake.city() for _ in range(1, 200000)],
-        "estado": [fake.state() for _ in range(1, 200000)],
-        "cep": [
-            fake.bothify(text="?????-###", letters="0123456789")
-            for _ in range(1, 200000)
-        ],
-        "telefone": [fake.bothify(text="(0##) 9####-####") for _ in range(1, 200000)],
-        "endereco": [fake.address() for _ in range(1, 200000)],
-        "cpf": [fake.unique.cpf() for _ in range(1, 200000)],
-        "rg": [fake.unique.rg() for _ in range(1, 200000)],
-        "data_nascimento": [
-            fake.date_of_birth(minimum_age=18, maximum_age=80) for _ in range(1, 200000)
-        ],
-        "sexo": [
-            fake.random_element(["Masculino", "Feminino"]) for _ in range(1, 200000)
-        ],
-        "estado_civil": [
-            fake.random_element(["Solteiro", "Casado", "Divorciado", "Viúvo"])
-            for _ in range(1, 200000)
-        ],
-        "profissao": [fake.job() for _ in range(1, 200000)],
-        "data_cadastro": [fake.date_this_decade() for _ in range(1, 200000)],
-    }
-)
 
-LIST_ID_CLIENTE = clientes["id_cliente"].tolist()
+# Definição das tabelas
+class Estado(Base):
+    __tablename__ = "estados"
+    id = Column(Integer, primary_key=True)
+    nome = Column(String, nullable=False, unique=True)
+    sigla = Column(String, nullable=False, unique=True)
 
-pedidos = pd.DataFrame(
-    {
-        "data_pedido": [fake.date_this_year() for _ in range(1, 200000)],
-        "id_cliente": [fake.random_element(LIST_ID_CLIENTE) for _ in range(1, 200000)],
-        "id_pedido": [
-            fake.bothify(text="#:???-##########", letters="ABCDEF")
-            for _ in range(1, 200000)
-        ],
-        "quantidade": [fake.random_int(min=1, max=10) for _ in range(1, 200000)],
-        "valor": [
-            round(fake.pyfloat(min_value=15, max_value=1000, right_digits=2), 2)
-            for _ in range(1, 200000)
-        ],
-        "forma_pagamento": [
-            fake.random_element(
-                ["Cartão de Crédito", "Cartão de Débito", "Boleto", "Pix"]
-            )
-            for _ in range(1, 200000)
-        ],
-        "status": [
-            fake.random_element(["pendente", "aprovado", "cancelado"])
-            for _ in range(1, 200000)
-        ],
-    }
-)
+    clientes = relationship("Cliente", back_populates="estado")
 
-pedidos["frete"] = pedidos.apply(
-    lambda row: (
-        round(fake.pyfloat(min_value=7, max_value=95, right_digits=2), 2)
-        if row["valor"] < 400
-        else 0
-    ),
-    axis=1,
-)
-pedidos["sub_total"] = (pedidos["valor"] * pedidos["quantidade"]) + pedidos["frete"]
-pedidos["desconto"] = pedidos.apply(
-    lambda row: round(row["valor"] / 100, 2) if row["forma_pagamento"] == "Pix" else 0,
-    axis=1,
-)
-pedidos["total"] = pedidos.apply(
-    lambda row: (
-        row["sub_total"] - row["desconto"] if row["desconto"] != 0 else row["sub_total"]
-    ),
-    axis=1,
-)
-pedidos["data_entrega"] = pedidos.apply(
-    lambda row: (
-        fake.date_between(
-            start_date=row["data_pedido"],
-            end_date=row["data_pedido"] + pd.Timedelta(days=18),
-        )
-        if row["status"] == "aprovado"
-        else None
-    ),
-    axis=1,
-)
-pedidos["tempo_entrega"] = pedidos.apply(
-    lambda row: (
-        (row["data_entrega"] - row["data_pedido"]).days
-        if row["data_entrega"] is not None
-        else None
-    ),
-    axis=1,
-)
 
-pedidos = pedidos[
-    [
-        "data_pedido",
-        "id_cliente",
-        "id_pedido",
-        "quantidade",
-        "valor",
-        "frete",
-        "sub_total",
-        "forma_pagamento",
-        "desconto",
-        "status",
-        "total",
-        "data_entrega",
-        "tempo_entrega",
-    ]
+class Genero(Base):
+    __tablename__ = "generos"
+    id = Column(Integer, primary_key=True)
+    descricao = Column(String, nullable=False, unique=True)
+
+    clientes = relationship("Cliente", back_populates="genero")
+
+
+class EstadoCivil(Base):
+    __tablename__ = "estados_civis"
+    id = Column(Integer, primary_key=True)
+    descricao = Column(String, nullable=False, unique=True)
+
+    clientes = relationship("Cliente", back_populates="estado_civil")
+
+
+class Cliente(Base):
+    __tablename__ = "clientes"
+    id = Column(Integer, primary_key=True)
+    primeiro_nome = Column(String, nullable=False)
+    segundo_nome = Column(String, nullable=False)
+    genero_id = Column(Integer, ForeignKey("generos.id"), nullable=False)
+    estado_civil_id = Column(Integer, ForeignKey("estados_civis.id"), nullable=False)
+    cpf = Column(String, unique=True, nullable=False)
+    rg = Column(String, unique=True, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    telefone = Column(String, nullable=False)
+    endereco = Column(String, nullable=False)
+    estado_id = Column(Integer, ForeignKey("estados.id"), nullable=False)
+
+    estado = relationship("Estado", back_populates="clientes")
+    genero = relationship("Genero", back_populates="clientes")
+    estado_civil = relationship("EstadoCivil", back_populates="clientes")
+    pedidos = relationship("Pedido", back_populates="cliente")
+
+
+class Categoria(Base):
+    __tablename__ = "categorias"
+    id = Column(Integer, primary_key=True)
+    nome = Column(String, nullable=False, unique=True)
+
+    produtos = relationship("Produto", back_populates="categoria")
+
+
+class Produto(Base):
+    __tablename__ = "produtos"
+    id = Column(Integer, primary_key=True)
+    nome = Column(String, nullable=False)
+    categoria_id = Column(Integer, ForeignKey("categorias.id"), nullable=False)
+    preco = Column(Float, nullable=False)
+    estoque = Column(Integer, nullable=False)
+
+    categoria = relationship("Categoria", back_populates="produtos")
+    pedidos = relationship("Pedido", back_populates="produto")
+
+
+class FormaPagamento(Base):
+    __tablename__ = "formas_pagamento"
+    id = Column(Integer, primary_key=True)
+    metodo = Column(String, nullable=False, unique=True)
+
+    pedidos = relationship("Pedido", back_populates="forma_pagamento")
+
+
+class CanalVenda(Base):
+    __tablename__ = "canais_venda"
+    id = Column(Integer, primary_key=True)
+    nome = Column(String, nullable=False, unique=True)
+
+    pedidos = relationship("Pedido", back_populates="canal_venda")
+
+
+class Status(Base):
+    __tablename__ = "status"
+    id = Column(Integer, primary_key=True)
+    descricao = Column(String, nullable=False, unique=True)
+
+    pedidos = relationship("Pedido", back_populates="status")
+
+
+class Pedido(Base):
+    __tablename__ = "pedidos"
+    id = Column(Integer, primary_key=True)
+    cliente_id = Column(Integer, ForeignKey("clientes.id"), nullable=False)
+    produto_id = Column(Integer, ForeignKey("produtos.id"), nullable=False)
+    forma_pagamento_id = Column(
+        Integer, ForeignKey("formas_pagamento.id"), nullable=False
+    )
+    canal_venda_id = Column(Integer, ForeignKey("canais_venda.id"), nullable=False)
+    status_id = Column(Integer, ForeignKey("status.id"), nullable=False)
+    quantidade = Column(Integer, nullable=False)
+    data_pedido = Column(Date, nullable=False)
+    subtotal = Column(Float, nullable=False)
+    frete = Column(Float, nullable=False)
+    total = Column(Float, nullable=False)
+    data_entrega = Column(Date, nullable=True)
+
+    cliente = relationship("Cliente", back_populates="pedidos")
+    produto = relationship("Produto", back_populates="pedidos")
+    forma_pagamento = relationship("FormaPagamento", back_populates="pedidos")
+    canal_venda = relationship("CanalVenda", back_populates="pedidos")
+    status = relationship("Status", back_populates="pedidos")
+
+
+# Criando as tabelas
+Base.metadata.create_all(engine)
+
+# Inserindo dados fictícios
+estados_brasil = [
+    ("São Paulo", "SP"),
+    ("Rio de Janeiro", "RJ"),
+    ("Minas Gerais", "MG"),
+    ("Bahia", "BA"),
+    ("Paraná", "PR"),
+    ("Rio Grande do Sul", "RS"),
+    ("Pernambuco", "PE"),
+    ("Ceará", "CE"),
+    ("Pará", "PA"),
+    ("Santa Catarina", "SC"),
+    ("Goiás", "GO"),
+    ("Maranhão", "MA"),
+    ("Paraíba", "PB"),
+    ("Espírito Santo", "ES"),
+    ("Piauí", "PI"),
+    ("Alagoas", "AL"),
+    ("Mato Grosso", "MT"),
+    ("Mato Grosso do Sul", "MS"),
+    ("Distrito Federal", "DF"),
+    ("Rondônia", "RO"),
+    ("Tocantins", "TO"),
+    ("Acre", "AC"),
+    ("Roraima", "RR"),
+    ("Amazonas", "AM"),
+    ("Amapá", "AP"),
 ]
 
-clientes.to_sql("clientes", engine, if_exists="replace", index=False)
-pedidos.to_sql("pedidos", engine, if_exists="replace", index=False)
+for nome, sigla in estados_brasil:
+    estado = Estado(nome=nome, sigla=sigla)
+    session.add(estado)
 
-print("Dados gerados com sucesso!")
+session.commit()
+
+generos = ["Masculino", "Feminino", "Outro"]
+for s in generos:
+    session.add(Genero(descricao=s))
+
+session.commit()
+
+estados_civis = ["Solteiro", "Casado", "Divorciado", "Viúvo"]
+for ec in estados_civis:
+    session.add(EstadoCivil(descricao=ec))
+
+session.commit()
+
+estados = session.query(Estado).all()
+generos = session.query(Genero).all()
+estados_civis = session.query(EstadoCivil).all()
+
+#### CLIENTE ####
+
+for _ in range(200000):  # Cria 200.000 Clientes
+    cliente = Cliente(
+        primeiro_nome=fake.first_name(),
+        segundo_nome=fake.last_name(),
+        genero_id=random.choice(generos).id,
+        estado_civil_id=random.choice(estados_civis).id,
+        cpf=fake.unique.cpf(),
+        rg=fake.unique.rg(),
+        email=fake.unique.email(),
+        endereco=fake.address(),
+        estado_id=random.choice(estados).id,
+        telefone=fake.bothify(text="(0##) 9####-####"),
+    )
+    session.add(cliente)
+
+session.commit()
+
+categorias = [
+    Categoria(nome="Eletrônicos"),
+    Categoria(nome="Moda"),
+    Categoria(nome="Alimentos"),
+    Categoria(nome="Móveis"),
+    Categoria(nome="Eletrodomésticos"),
+    Categoria(nome="Livros"),
+    Categoria(nome="Jogos"),
+    Categoria(nome="Beleza"),
+    Categoria(nome="Esportes"),
+    Categoria(nome="Automóveis"),
+]
+
+for categoria in categorias:
+    session.add(categoria)
+
+session.commit()
+
+#### PRODUTO ####
+produtos = []
+for _ in range(5000):  # Cria 5.000 Produtos
+    produto = Produto(
+        nome=fake.word().capitalize(),
+        categoria_id=random.choice(categorias).id,
+        preco=round(random.uniform(10, 500), 2),
+        estoque=random.randint(5, 50),
+    )
+    session.add(produto)
+    produtos.append(produto)
+
+session.commit()
+
+formas_pagamento = [
+    FormaPagamento(metodo="Cartão de Crédito"),
+    FormaPagamento(metodo="Boleto Bancário"),
+    FormaPagamento(metodo="Pix"),
+    FormaPagamento(metodo="Transferência Bancária"),
+    FormaPagamento(metodo="Cartão de Débito"),
+]
+for forma in formas_pagamento:
+    session.add(forma)
+
+session.commit()
+
+canais_venda = [
+    CanalVenda(nome="Loja Online"),
+    CanalVenda(nome="Marketplace"),
+    CanalVenda(nome="Loja Física"),
+    CanalVenda(nome="Redes Sociais"),
+    CanalVenda(nome="E-mail Marketing"),
+    CanalVenda(nome="Call Center"),
+]
+for canal in canais_venda:
+    session.add(canal)
+
+session.commit()
+
+status_pedidos = [
+    Status(descricao="Pendente"),
+    Status(descricao="Pago"),
+    Status(descricao="Enviado"),
+    Status(descricao="Entregue"),
+    Status(descricao="Cancelado"),
+]
+for status in status_pedidos:
+    session.add(status)
+
+session.commit()
+
+clientes = session.query(Cliente).all()
+categorias = session.query(Categoria).all()
+produtos = session.query(Produto).all()
+formas_pagamento = session.query(FormaPagamento).all()
+canais_venda = session.query(CanalVenda).all()
+status_pedidos = session.query(Status).all()
+
+#### PEDIDO ####
+
+for _ in range(800000):  # Cria 800.000 Pedidos
+    cliente = random.choice(clientes)
+    produto = random.choice(produtos)
+    forma_pagamento = random.choice(formas_pagamento)
+    canal_venda = random.choice(canais_venda)
+    status = random.choice(status_pedidos)
+    quantidade = random.randint(1, 5)
+    data_pedido = fake.date_this_year()
+    subtotal = round(produto.preco * quantidade, 2)
+    frete = round(random.uniform(7, 95), 2) if produto.preco < 400 else 0
+    total = round(subtotal + frete, 2)
+    data_entrega = (
+        fake.random_element(
+            elements=(
+                None,
+                fake.date_between(start_date=data_pedido, end_date="today")
+                + pd.Timedelta(days=18),
+            )
+        )
+        if status.descricao == "Entregue"
+        else None
+    )
+    pedido = Pedido(
+        cliente_id=cliente.id,
+        produto_id=produto.id,
+        forma_pagamento_id=forma_pagamento.id,
+        canal_venda_id=canal_venda.id,
+        status_id=status.id,
+        quantidade=quantidade,
+        data_pedido=data_pedido,
+        subtotal=subtotal,
+        frete=frete,
+        total=total,
+        data_entrega=data_entrega,
+    )
+    session.add(pedido)
+
+session.commit()
+
+print("Banco de dados populado com sucesso usando SQLAlchemy!")
+session.close()
