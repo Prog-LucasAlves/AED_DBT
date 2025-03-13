@@ -169,7 +169,7 @@ A pasta models/staging/ no DBT contém os modelos intermediários, que servem co
 
 ## 📊 Modelo mart_clientes_ativos.sql
 
-O Modelo `smart_clientes_ativos.sql` verifica o total de pedido por cliente nos úlyimos 2 meses.
+O Modelo `smart_clientes_ativos.sql` verifica o total de pedidos por cliente nos úlyimos 2 meses.
 
 ```sql
 SELECT
@@ -191,14 +191,7 @@ Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. �
 
 ## SQL Camada `marts`
 
-1. [**mart_vendas_diarias.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/mart_vendas_diarias.sql) - Agrega as vendas por dia.
-2. [**mart_faturamento_mensal.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/mart_faturamento_mensal.sql) - Faturamento mensal da empresa.
-3. [**mart_clientes_ativos.sql**]() - Lista de clientes que fizeram pedidos nos últimos 2 meses.
-4. [**mart_tickets_medios.sql**]() - Valor médio dos pedidos por mês.
-5. [**mart_clientes_fieis.sql**]() - Clientes com maior número de compras.
-6. [**mart_faturamento_forma de_pagamento**]() - Faturamento total da empresa por forma de pagamento. OBS.: Pedidos com status de 'aprovado'
-7. [**mart_vendas_por_estado**]() - Faturamento mensal por estado. OBS.: Pedidos com status de 'aprovado'
-8. [**mart_pedidos_cancelados**]() - Análise dos pedidos cancelados.
+1. [**mart_clientes_ativos.sql**]()
 
 ## 📜 Licença
 
