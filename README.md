@@ -2,12 +2,17 @@
 
 Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQL**, gerados com **Faker** para simular pedidos, clientes e vendas.
 
+## 📌 Visão Geral
+
+**Este projeto DBT foi desenvolvido para modelagem e análise de dados de um e-commerce, garantindo insights detalhados sobre faturamento, clientes, produtos e operações. Utilizando o DBT (Data Build Tool) em conjunto com PostgreSQL, estruturamos um pipeline de dados eficiente para análise e geração de relatórios.**
+
 ## 🛠 Tecnologias Utilizadas
 
-- **DBT Core** → Modelagem e transformação de dados
-- **PostgreSQL** → Banco de dados relacional
-- **Faker** → Geração de dados fictícios
-- **Pandas & SQLAlchemy** → Inserção de dados no banco
+- [**DBT Core**](https://docs.getdbt.com/) → Modelagem e transformação de dados
+- [**PostgreSQL**](https://www.postgresql.org/) → Banco de dados relacional
+- [**Faker**](https://faker.readthedocs.io/en/stable/) → Geração de dados fictícios
+- [**Pandas**](https://pandas.pydata.org/) → Manipulação de dados
+- [**SQLAlchemy**](https://www.sqlalchemy.org/) → Inserção de dados no banco
 
 ## 📂 Estrutura do Projeto
 
@@ -34,10 +39,23 @@ AED_DBT
 ### 🔹 1. Instalar Dependências
 
 ```bash
-pip install dbt-core faker pandas sqlalchemy psycopg2
+pip install dbt-core faker pandas sqlalchemy psycopg2-binary python-dotenv
 ```
 
-### 🔹 2. Configurar conexão com PostgreSQL
+### 🔹 2. Configuração do arquivo `.env`
+
+**Um arquivo `.env` em Python é usado para armazenar variáveis de ambiente de forma segura, evitando que informações sensíveis, como credenciais de banco de dados ou chaves de API, sejam expostas diretamente no código.**
+
+*Obs.:* ***Não compartilhe o `.env`: Adicione `.env` ao seu `.gitignore` para evitar que ele seja enviado para repositórios públicos.***
+
+```env
+DATABASE=nome do database
+DATABASE_USER=nome do usuário
+DATABASE_PASSWORD=senha
+DATABASE_HOST=endereço do host
+```
+
+### 🔹 3. Configurar a conexão do DBT com PostgreSQL
 
 Crie o arquivo `~/.dbt/profiles.yml` (ou `C:\Users\seu_usuario\.dbt\profiles.yml` no **Windows**) com a informações de conexão ao banco de dados:
 
@@ -72,7 +90,7 @@ default:
 | `schema: public` | Esquema onde os modelos DBT serão criados |
 | `threads: 4` | Número de consultas simultâneas que o DBT pode rodar |
 
-### 🔹 3. Configurar o `dbt_project.yml`
+### 🔹 4. Configurar o `dbt_project.yml`
 
 Crie o arquivo `dbt_project.yml` dentro da pasta do projeto (`meu_projeto_dbt/`):
 
@@ -149,7 +167,7 @@ marts:
 4. ✅ Para dados agregados consolidados, use `table`.
 5. ✅ Use `incremental` se o dataset for grande e precisar de eficiência.
 
-### 🔹 4. Gerar Dados Fictícios
+### 🔹 5. Gerar Dados Fictícios
 
 Execute o script para popular o banco:
 
@@ -157,7 +175,7 @@ Execute o script para popular o banco:
 python gerar_dados.py
 ```
 
-### 🔹 5. Rodar os Modelos DBT
+### 🔹 6. Rodar os Modelos DBT
 
 ```bash
 dbt run          # Executar as transformações
@@ -169,15 +187,19 @@ A pasta models/staging/ no DBT contém os modelos intermediários, que servem co
 
 ## 📊 Modelo mart_clientes_ativos.sql
 
-O Modelo `smart_clientes_ativos.sql` verifica o total de pedidos por cliente nos úlyimos 2 meses.
+O Modelo `smart_clientes_ativos.sql` verifica o total(Quantidade) de pedidos por cliente nos últimos 2 meses.
 
 ```sql
-SELECT
-    cliente_id,
-    COUNT(id) AS total_pedidos
-FROM {{ ref('stg_pedidos') }}
-WHERE data_pedido >= CURRENT_DATE - INTERVAL '2 months'
-GROUP BY cliente_id DESC
+WITH clientes_ativos AS (
+    SELECT
+        cliente_id,
+        COUNT(id) AS total_pedidos
+    FROM {{ ref('stg_pedidos') }}
+    WHERE data_pedido >= CURRENT_DATE - INTERVAL '2 months'
+    GROUP BY cliente_id
+    ORDER BY total_pedidos DESC
+)
+SELECT * FROM clientes_ativos
 ```
 
 ## ✅ Objetivos do Projeto
@@ -191,7 +213,8 @@ Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. �
 
 ## SQL Camada `marts`
 
-1. [**mart_clientes_ativos.sql**]()
+1. [**mart_clientes_ativos.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/marts_clientes_ativos.sql)
+2. [**mart_faturamento_mensal.sql**](...)
 
 ## 📜 Licença
 
