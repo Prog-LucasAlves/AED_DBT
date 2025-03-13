@@ -28,6 +28,7 @@ MANIFEST
 *.lock
 /logs
 *.txt
+/AUTH_v
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
