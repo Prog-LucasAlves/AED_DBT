@@ -1,0 +1,30 @@
+name: "📌 Relatar um Bug"
+description: "Use este template para relatar um problema no projeto."
+title: "[BUG] Título do problema"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "### 🐞 Descrição do Bug\nUma descrição clara e concisa do que está acontecendo."
+  - type: textarea
+    id: steps
+    attributes:
+      label: "🔄 Passos para Reproduzir"
+      description: "Liste os passos para reproduzir o problema."
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "📷 Capturas de Tela"
+      description: "Se aplicável, adicione capturas de tela para ajudar a explicar o problema."
+  - type: input
+    id: environment
+    attributes:
+      label: "💻 Ambiente"
+      description: "Sistema operacional, navegador, versão do projeto, etc."
+  - type: textarea
+    id: logs
+    attributes:
+      label: "📜 Logs ou Saída de Erro"
+      description: "Adicione qualquer mensagem de erro relevante."
