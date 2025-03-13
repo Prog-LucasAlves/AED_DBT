@@ -191,7 +191,7 @@ Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. �
 
 ## SQL Camada `marts`
 
-1. [**mart_clientes_ativos.sql**]()
+1. [**mart_clientes_ativos.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/marts_clientes_ativos.sql)
 
 ## 📜 Licença
 
