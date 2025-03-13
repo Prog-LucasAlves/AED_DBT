@@ -1,0 +1,23 @@
+name: "✨ Solicitação de Nova Funcionalidade"
+description: "Sugira uma nova funcionalidade para o projeto."
+title: "[FEATURE] Nome da funcionalidade"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "### 💡 Descrição da Funcionalidade\nDescreva de forma clara e objetiva o que deseja adicionar ao projeto."
+  - type: textarea
+    id: motivation
+    attributes:
+      label: "🎯 Motivação"
+      description: "Por que essa funcionalidade é importante? Qual problema ela resolve?"
+  - type: textarea
+    id: benefits
+    attributes:
+      label: "🚀 Benefícios"
+      description: "Liste os benefícios dessa nova funcionalidade."
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "📑 Alternativas Consideradas"
+      description: "Se aplicável, mencione outras soluções ou abordagens."
