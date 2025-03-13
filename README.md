@@ -167,32 +167,17 @@ dbt run          # Executar as transformações
 
 A pasta models/staging/ no DBT contém os modelos intermediários, que servem como uma camada de preparação antes da modelagem final. Esses modelos limpam, padronizam e organizam os dados brutos antes de serem usados em modelos analíticos (marts).
 
-## 📊 Modelo mart_vendas.sql
+## 📊 Modelo mart_clientes_ativos.sql
 
-O Modelo `smart_vendas`consolida as vendas por cliente.
+O Modelo `smart_clientes_ativos.sql` verifica o total de pedido por cliente nos úlyimos 2 meses.
 
 ```sql
--- Total de de pedidos por cliente com status de 'aprovado' e valor total dos pedidos
-WITH pedidos AS (
-    SELECT * FROM {{ ref('stg_pedidos') }}
-),
-clientes AS (
-    SELECT * FROM {{ ref('stg_clientes') }}
-),
-mart_vendas_r1 AS (
-    SELECT
-        c.id_cliente AS id_cliente,
-        c.primeiro_nome AS cliente,
-        p.forma_pagamento AS forma_pagamento,
-        p.status AS status_pedido,
-        COUNT(p.id_cliente) AS total_qtd_pedidos,
-        SUM(p.total) AS total_vendas
-    FROM pedidos p
-    JOIN clientes c ON p.id_cliente = c.id_cliente
-    WHERE p.status = 'aprovado'
-    GROUP BY c.id_cliente, c.primeiro_nome, p.forma_pagamento, p.status
-)
-SELECT * FROM mart_vendas_r1
+SELECT
+    cliente_id,
+    COUNT(id) AS total_pedidos
+FROM {{ ref('stg_pedidos') }}
+WHERE data_pedido >= CURRENT_DATE - INTERVAL '2 months'
+GROUP BY cliente_id DESC
 ```
 
 ## ✅ Objetivos do Projeto
@@ -204,7 +189,16 @@ SELECT * FROM mart_vendas_r1
 
 Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. 😃🚀
 
-##
+## SQL Camada `marts`
+
+1. [**mart_vendas_diarias.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/mart_vendas_diarias.sql) - Agrega as vendas por dia.
+2. [**mart_faturamento_mensal.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/mart_faturamento_mensal.sql) - Faturamento mensal da empresa.
+3. [**mart_clientes_ativos.sql**]() - Lista de clientes que fizeram pedidos nos últimos 2 meses.
+4. [**mart_tickets_medios.sql**]() - Valor médio dos pedidos por mês.
+5. [**mart_clientes_fieis.sql**]() - Clientes com maior número de compras.
+6. [**mart_faturamento_forma de_pagamento**]() - Faturamento total da empresa por forma de pagamento. OBS.: Pedidos com status de 'aprovado'
+7. [**mart_vendas_por_estado**]() - Faturamento mensal por estado. OBS.: Pedidos com status de 'aprovado'
+8. [**mart_pedidos_cancelados**]() - Análise dos pedidos cancelados.
 
 ## 📜 Licença
 
