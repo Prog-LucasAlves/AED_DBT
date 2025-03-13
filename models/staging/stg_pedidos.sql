@@ -1,11 +1,17 @@
 WITH pedidos AS (
     SELECT
-        data_pedido::DATE AS data_pedido,
-        id_cliente,
-        id_pedido,
-        forma_pagamento,
-        status,
-        total
+        id,
+        cliente_id,
+        produto_id,
+        forma_pagamento_id,
+        canal_venda_id,
+        status_id,
+        quantidade,
+        data_pedido,
+        subtotal,
+        frete,
+        total,
+        data_entrega
     FROM public.pedidos
 )
 SELECT * FROM pedidos

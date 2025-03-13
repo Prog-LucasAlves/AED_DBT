@@ -1,10 +1,16 @@
 WITH clientes AS (
     SELECT
-        id_cliente,
+        id,
         primeiro_nome,
+        segundo_nome,
+        genero_id,
+        estado_civil_id,
+        cpf,
+        rg,
         email,
-        estado,
-        data_cadastro::DATE AS data_cadastro
+        telefone,
+        endereco,
+        estado_id
     FROM public.clientes
 )
 SELECT * FROM clientes
