@@ -1,0 +1,81 @@
+bug_report.yml:
+  name: "📌 Relatar um Bug"
+  description: "Use este template para relatar um problema no projeto."
+  title: "[BUG] Título do problema"
+  labels: ["bug"]
+  body:
+    - type: markdown
+      attributes:
+        value: "### 🐞 Descrição do Bug\nUma descrição clara e concisa do que está acontecendo."
+    - type: textarea
+      id: steps
+      attributes:
+        label: "🔄 Passos para Reproduzir"
+        description: "Liste os passos para reproduzir o problema."
+      validations:
+        required: true
+    - type: textarea
+      id: screenshots
+      attributes:
+        label: "📷 Capturas de Tela"
+        description: "Se aplicável, adicione capturas de tela para ajudar a explicar o problema."
+    - type: input
+      id: environment
+      attributes:
+        label: "💻 Ambiente"
+        description: "Sistema operacional, navegador, versão do projeto, etc."
+    - type: textarea
+      id: logs
+      attributes:
+        label: "📜 Logs ou Saída de Erro"
+        description: "Adicione qualquer mensagem de erro relevante."
+
+feature_request.yml:
+  name: "✨ Solicitação de Nova Funcionalidade"
+  description: "Sugira uma nova funcionalidade para o projeto."
+  title: "[FEATURE] Nome da funcionalidade"
+  labels: ["enhancement"]
+  body:
+    - type: markdown
+      attributes:
+        value: "### 💡 Descrição da Funcionalidade\nDescreva de forma clara e objetiva o que deseja adicionar ao projeto."
+    - type: textarea
+      id: motivation
+      attributes:
+        label: "🎯 Motivação"
+        description: "Por que essa funcionalidade é importante? Qual problema ela resolve?"
+    - type: textarea
+      id: benefits
+      attributes:
+        label: "🚀 Benefícios"
+        description: "Liste os benefícios dessa nova funcionalidade."
+    - type: textarea
+      id: alternatives
+      attributes:
+        label: "📑 Alternativas Consideradas"
+        description: "Se aplicável, mencione outras soluções ou abordagens."
+
+refactor.yml:
+  name: "🛠️ Melhorias e Refatoração"
+  description: "Sugira melhorias ou refatorações no código."
+  title: "[REFACTOR] Nome da melhoria"
+  labels: ["refactor"]
+  body:
+    - type: markdown
+      attributes:
+        value: "### 🔍 O que deve ser melhorado?\nExplique qual parte do código precisa de melhoria e por quê."
+    - type: textarea
+      id: benefits
+      attributes:
+        label: "🎯 Benefícios da Melhorias"
+        description: "Por que essa melhoria é importante?"
+    - type: textarea
+      id: code
+      attributes:
+        label: "📜 Código Atual (Se aplicável)"
+        description: "Se possível, forneça um trecho do código atual."
+    - type: textarea
+      id: implementation
+      attributes:
+        label: "💡 Sugestão de Implementação"
+        description: "Descreva como a melhoria pode ser implementada."
