@@ -24,6 +24,9 @@ models:
     marts:
       +materialized: table
       +schema: marts
+    marketing:
+      +materialized: table
+      +schema: marketing
 
 seeds:
   meu_projeto_dbt:

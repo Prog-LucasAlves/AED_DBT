@@ -1,5 +1,6 @@
 WITH pedidos AS (
     SELECT
+        {{ dbt_utils.generate_surrogate_key(['id', 'produto_id']) }} AS pedido_sk,
         id,
         cliente_id,
         produto_id,

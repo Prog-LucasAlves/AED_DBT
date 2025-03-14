@@ -8,3 +8,7 @@ WITH clientes_ativos AS (
     ORDER BY total_pedidos DESC
 )
 SELECT * FROM clientes_ativos
+
+/*
+Adicionar o nome do cliente, email e telefone.
+/*

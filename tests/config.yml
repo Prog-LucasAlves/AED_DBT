@@ -1,0 +1,33 @@
+version: 2  # Define a versão da configuração
+
+models:
+  - name: stg_clientes  # Nome do modelo (arquivo .sql dentro de models/)
+    description: "Tabela de clientes transformada a partir dos dados brutos"
+    columns:
+      - name: id_cliente
+        description: "Identificador único do cliente"
+        tests:
+          - unique
+          - not_null
+
+      - name: email
+        description: "E-mail do cliente"
+        tests:
+          - not_null
+          - dbt_utils.not_empty_string
+
+  - name: stg_pedidos
+    description: "Tabela de pedidos"
+    columns:
+      - name: id_pedido
+        description: "Identificador do pedido"
+        tests:
+          - unique
+          - not_null
+
+      - name: valor_total
+        description: "Valor total do pedido"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "valor_total >= 0"
