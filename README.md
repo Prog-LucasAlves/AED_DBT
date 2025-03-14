@@ -18,18 +18,21 @@ Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQ
 
 ```bash
 AED_DBT
-├── models/
-    ├── marts/                # Modelos finais
-        ├── mart_vendas.sql
-    ├── staging/              # Modelos intermediários
+├── macros/                   # Funções reutilizáveis para SQL dinâmico
+├── models/                   # Macros personalizados
+    ├── marts/                # Modelos finais (fatos e dimensões para BI)
+        ├── mart_clientes_ativos.sql
+    ├── staging/              # Modelos intermediários de limpeza e padronização
         ├── stg_clientes.sql
         ├── stg_pedidos.sql
+├── tests                     # Testes para garantir qualidade dos dados -> `dbt.utils`
 ├── .flake8                   # Configuração flake8
 ├── .gitignore                # Arquivos a serem ignorados
 ├── pre-commit-config.yaml    # Configuração precommit
 ├── .python-version           # Versão do Python utilizada no projeto
 ├── dbt_project.yml           # Configuração do DBT
 ├── gerar_dados.py            # Script para geração de dados fictícios com Faker
+├── packages.yml              # Pacotes instalados no DBT
 ├── pyproject.toml            # Bibliotecas utlizadas no projeto
 ├── README.md                 # Descrição do Projeto
 ```
@@ -214,7 +217,7 @@ Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. �
 ## SQL Camada `marts`
 
 1. [**mart_clientes_ativos.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/marts_clientes_ativos.sql)
-2. [**mart_faturamento_mensal.sql**](...)
+2. [**mart_faturamento_mensal.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/mart_faturamento_mensal.sql)
 
 ## 📜 Licença
 
