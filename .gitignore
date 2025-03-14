@@ -29,6 +29,8 @@ MANIFEST
 /logs
 *.txt
 /AUTH_v
+/dbt_packages
+*lock.yml
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
