@@ -52,6 +52,14 @@ class EstadoCivil(Base):
     clientes = relationship("Cliente", back_populates="estado_civil")
 
 
+class EmailMarketing(Base):
+    __tablename__ = "emails_marketing"
+    id = Column(Integer, primary_key=True)
+    email = Column(String, nullable=False, unique=True)
+
+    clientes = relationship("Cliente", back_populates="emails_marketing")
+
+
 class Cliente(Base):
     __tablename__ = "clientes"
     id = Column(Integer, primary_key=True)
@@ -59,17 +67,22 @@ class Cliente(Base):
     segundo_nome = Column(String, nullable=False)
     genero_id = Column(Integer, ForeignKey("generos.id"), nullable=False)
     estado_civil_id = Column(Integer, ForeignKey("estados_civis.id"), nullable=False)
+    data_nascimento = Column(Date, nullable=False)
     cpf = Column(String, unique=True, nullable=False)
     rg = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     telefone = Column(String, nullable=False)
     endereco = Column(String, nullable=False)
     estado_id = Column(Integer, ForeignKey("estados.id"), nullable=False)
+    email_marketing_id = Column(
+        Integer, ForeignKey("emails_marketing.id"), nullable=True
+    )
 
     estado = relationship("Estado", back_populates="clientes")
     genero = relationship("Genero", back_populates="clientes")
     estado_civil = relationship("EstadoCivil", back_populates="clientes")
     pedidos = relationship("Pedido", back_populates="cliente")
+    emails_marketing = relationship("EmailMarketing", back_populates="clientes")
 
 
 class Categoria(Base):
@@ -190,9 +203,17 @@ for ec in estados_civis:
 
 session.commit()
 
+email_marketing = ["sim", "não", "não respondeu"]
+
+for e in email_marketing:
+    session.add(EmailMarketing(email=e))
+
+session.commit()
+
 estados = session.query(Estado).all()
 generos = session.query(Genero).all()
 estados_civis = session.query(EstadoCivil).all()
+email_marketing = session.query(EmailMarketing).all()
 
 #### CLIENTE ####
 
@@ -202,12 +223,14 @@ for _ in range(200000):  # Cria 200.000 Clientes
         segundo_nome=fake.last_name(),
         genero_id=random.choice(generos).id,
         estado_civil_id=random.choice(estados_civis).id,
+        data_nascimento=fake.date_of_birth(minimum_age=18, maximum_age=80),
         cpf=fake.unique.cpf(),
         rg=fake.unique.rg(),
         email=fake.unique.email(),
+        telefone=fake.bothify(text="(0##) 9####-####"),
         endereco=fake.address(),
         estado_id=random.choice(estados).id,
-        telefone=fake.bothify(text="(0##) 9####-####"),
+        email_marketing_id=random.choice(email_marketing).id,
     )
     session.add(cliente)
 
