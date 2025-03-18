@@ -13,6 +13,7 @@ Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQ
 - [**Faker**](https://faker.readthedocs.io/en/stable/) → Geração de dados fictícios
 - [**Pandas**](https://pandas.pydata.org/) → Manipulação de dados
 - [**SQLAlchemy**](https://www.sqlalchemy.org/) → Inserção de dados no banco
+- [**Render**](...) -> Deploy do bancod de dados PostgreSQL
 
 ## 📂 Estrutura do Projeto
 
@@ -20,8 +21,9 @@ Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQ
 AED_DBT
 ├── macros/                   # Funções reutilizáveis para SQL dinâmico
 ├── models/                   # Macros personalizados
-    ├── marts/                # Modelos finais (fatos e dimensões para BI)
+    ├── marketing/
         ├── mart_clientes_ativos.sql
+    ├── marts/                # Modelos finais (fatos e dimensões para BI)
     ├── staging/              # Modelos intermediários de limpeza e padronização
         ├── stg_clientes.sql
         ├── stg_pedidos.sql
@@ -188,19 +190,24 @@ dbt run          # Executar as transformações
 
 A pasta models/staging/ no DBT contém os modelos intermediários, que servem como uma camada de preparação antes da modelagem final. Esses modelos limpam, padronizam e organizam os dados brutos antes de serem usados em modelos analíticos (marts).
 
-## 📊 Modelo mart_clientes_ativos.sql
+## 📊 Modelo mark_clientes_ativos.sql
 
-O Modelo `smart_clientes_ativos.sql` verifica o total(Quantidade) de pedidos por cliente nos últimos 2 meses.
+O Modelo `mark_clientes_ativos.sql` verifica o total(Quantidade) de pedidos(Com menos de 4 pedidos) por cliente nos últimos 2 meses.
 
 ```sql
 WITH clientes_ativos AS (
     SELECT
-        cliente_id,
-        COUNT(id) AS total_pedidos
-    FROM {{ ref('stg_pedidos') }}
-    WHERE data_pedido >= CURRENT_DATE - INTERVAL '2 months'
-    GROUP BY cliente_id
-    ORDER BY total_pedidos DESC
+        p.cliente_id,
+        COUNT(p.id) AS total_pedidos,
+        c.primeiro_nome AS nome_cliente,
+        c.email,
+        c.telefone
+    FROM {{ ref('stg_pedidos') }} p
+    LEFT JOIN {{ ref('stg_clientes') }} c ON p.cliente_id = c.id
+    WHERE p.data_pedido >= CURRENT_DATE - INTERVAL '2 months'
+    GROUP BY p.cliente_id, c.primeiro_nome, c.email, c.telefone
+    HAVING COUNT(p.id) < 4
+    ORDER BY total_pedidos ASC
 )
 SELECT * FROM clientes_ativos
 ```
@@ -214,10 +221,22 @@ SELECT * FROM clientes_ativos
 
 Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. 😃🚀
 
-## SQL Camada `marts`
+## - 💰 `faturamento`
 
-1. [**mart_clientes_ativos.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/marts_clientes_ativos.sql)
-2. [**mart_faturamento_mensal.sql**](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/models/marts/mart_faturamento_mensal.sql)
+ 1. [**fat_faturamento_mensal.sql**](...)
+
+## - 📢 `marketing`
+
+1. [**mark_cliente_email_marketing.sql**](...)
+2. [**mart_clientes_ativos.sql**](...)
+
+## - 🗂️ `marts`
+
+1. [**mart_pivot_genero_estado_civil.sql**](...)
+
+## - 📁 `staging`
+
+## - 🛒 `vendas`
 
 ## 📜 Licença
 
