@@ -28,54 +28,54 @@ fake = Faker("pt_BR")
 
 # Definição das tabelas
 class Estado(Base):
-    __tablename__ = "estados"
-    id = Column(Integer, primary_key=True)
-    nome = Column(String, nullable=False, unique=True)
-    sigla = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_estado"
+    id_estado = Column(Integer, primary_key=True)
+    nome_estado = Column(String, nullable=False, unique=True)
+    sigla_estado = Column(String, nullable=False, unique=True)
 
     clientes = relationship("Cliente", back_populates="estado")
 
 
 class Genero(Base):
-    __tablename__ = "generos"
-    id = Column(Integer, primary_key=True)
-    descricao = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_genero"
+    id_genero = Column(Integer, primary_key=True)
+    descricao_genero = Column(String, nullable=False, unique=True)
 
     clientes = relationship("Cliente", back_populates="genero")
 
 
 class EstadoCivil(Base):
-    __tablename__ = "estados_civis"
-    id = Column(Integer, primary_key=True)
-    descricao = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_estado_civil"
+    id_estado_civil = Column(Integer, primary_key=True)
+    descricao_estado_civil = Column(String, nullable=False, unique=True)
 
     clientes = relationship("Cliente", back_populates="estado_civil")
 
 
 class EmailMarketing(Base):
-    __tablename__ = "emails_marketing"
-    id = Column(Integer, primary_key=True)
-    email = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_email_marketing"
+    id_email_marketing = Column(Integer, primary_key=True)
+    descricao_email_marketing = Column(String, nullable=False, unique=True)
 
     clientes = relationship("Cliente", back_populates="emails_marketing")
 
 
 class Cliente(Base):
-    __tablename__ = "clientes"
-    id = Column(Integer, primary_key=True)
+    __tablename__ = "tb_clientes"
+    id_cliente = Column(Integer, primary_key=True)
     primeiro_nome = Column(String, nullable=False)
-    segundo_nome = Column(String, nullable=False)
-    genero_id = Column(Integer, ForeignKey("generos.id"), nullable=False)
-    estado_civil_id = Column(Integer, ForeignKey("estados_civis.id"), nullable=False)
+    sobrenome = Column(String, nullable=False)
+    id_genero = Column(Integer, ForeignKey("tb_genero.id_genero"), nullable=False)
+    id_estado_civil = Column(Integer, ForeignKey("tb_estado_civil.id_estado_civil"), nullable=False)
     data_nascimento = Column(Date, nullable=False)
     cpf = Column(String, unique=True, nullable=False)
     rg = Column(String, unique=True, nullable=False)
     email = Column(String, unique=True, nullable=False)
     telefone = Column(String, nullable=False)
     endereco = Column(String, nullable=False)
-    estado_id = Column(Integer, ForeignKey("estados.id"), nullable=False)
-    email_marketing_id = Column(
-        Integer, ForeignKey("emails_marketing.id"), nullable=True
+    id_estado = Column(Integer, ForeignKey("tb_estado.id_estado"), nullable=False)
+    id_email_marketing = Column(
+        Integer, ForeignKey("tb_email_marketing.id_email_marketing"), nullable=True
     )
 
     estado = relationship("Estado", back_populates="clientes")
@@ -86,60 +86,69 @@ class Cliente(Base):
 
 
 class Categoria(Base):
-    __tablename__ = "categorias"
-    id = Column(Integer, primary_key=True)
-    nome = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_categoria"
+    id_categoria = Column(Integer, primary_key=True)
+    nome_categoria = Column(String, nullable=False, unique=True)
 
     produtos = relationship("Produto", back_populates="categoria")
 
 
 class Produto(Base):
-    __tablename__ = "produtos"
-    id = Column(Integer, primary_key=True)
-    nome = Column(String, nullable=False)
-    categoria_id = Column(Integer, ForeignKey("categorias.id"), nullable=False)
-    preco = Column(Float, nullable=False)
-    estoque = Column(Integer, nullable=False)
+    __tablename__ = "tb_produto"
+    id_produto = Column(Integer, primary_key=True)
+    nome_produto = Column(String, nullable=False)
+    id_categoria = Column(Integer, ForeignKey("tb_categoria.id_categoria"), nullable=False)
+    preco_unitario = Column(Float, nullable=False)
+    quantidade_estoque = Column(Integer, nullable=False)
 
     categoria = relationship("Categoria", back_populates="produtos")
-    pedidos = relationship("Pedido", back_populates="produto")
+    itens_pedido = relationship("ItensPedido", back_populates="produto")
 
 
 class FormaPagamento(Base):
-    __tablename__ = "formas_pagamento"
-    id = Column(Integer, primary_key=True)
-    metodo = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_formas_pagamento"
+    id_forma_pagamento = Column(Integer, primary_key=True)
+    metodo_pagamento = Column(String, nullable=False, unique=True)
 
     pedidos = relationship("Pedido", back_populates="forma_pagamento")
 
 
 class CanalVenda(Base):
-    __tablename__ = "canais_venda"
-    id = Column(Integer, primary_key=True)
-    nome = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_canais_venda"
+    id_canal_venda = Column(Integer, primary_key=True)
+    nome_canal_venda = Column(String, nullable=False, unique=True)
 
     pedidos = relationship("Pedido", back_populates="canal_venda")
 
 
 class Status(Base):
-    __tablename__ = "status"
-    id = Column(Integer, primary_key=True)
-    descricao = Column(String, nullable=False, unique=True)
+    __tablename__ = "tb_status"
+    id_status = Column(Integer, primary_key=True)
+    descricao_status = Column(String, nullable=False, unique=True)
 
     pedidos = relationship("Pedido", back_populates="status")
 
 
-class Pedido(Base):
-    __tablename__ = "pedidos"
-    id = Column(Integer, primary_key=True)
-    cliente_id = Column(Integer, ForeignKey("clientes.id"), nullable=False)
-    produto_id = Column(Integer, ForeignKey("produtos.id"), nullable=False)
-    forma_pagamento_id = Column(
-        Integer, ForeignKey("formas_pagamento.id"), nullable=False
-    )
-    canal_venda_id = Column(Integer, ForeignKey("canais_venda.id"), nullable=False)
-    status_id = Column(Integer, ForeignKey("status.id"), nullable=False)
+class ItensPedido(Base):
+    __tablename__ = "tb_itens_pedido"
+    id_item_produto = Column(Integer, primary_key=True)
+    id_pedido = Column(Integer, ForeignKey("tb_pedidos.id_pedido"), nullable=False)
+    id_produto = Column(Integer, ForeignKey("tb_produto.id_produto"), nullable=False)
     quantidade = Column(Integer, nullable=False)
+    preco_unitario = Column(Float, nullable=False)  # Preço no momento da compra
+    valor_subtotal = Column(Float, nullable=False)
+
+    pedido = relationship("Pedido", back_populates="itens_pedido")
+    produto = relationship("Produto", back_populates="itens_pedido")
+
+
+class Pedido(Base):
+    __tablename__ = "tb_pedidos"
+    id_pedido = Column(Integer, primary_key=True)
+    id_cliente = Column(Integer, ForeignKey("tb_clientes.id_cliente"), nullable=False)
+    id_forma_pagamento = Column(Integer, ForeignKey("tb_formas_pagamento.id_forma_pagamento"), nullable=False)
+    id_canal_venda = Column(Integer, ForeignKey("tb_canais_venda.id_canal_venda"), nullable=False)
+    id_status = Column(Integer, ForeignKey("tb_status.id_status"), nullable=False)
     data_pedido = Column(Date, nullable=False)
     subtotal = Column(Float, nullable=False)
     frete = Column(Float, nullable=False)
@@ -147,10 +156,10 @@ class Pedido(Base):
     data_entrega = Column(Date, nullable=True)
 
     cliente = relationship("Cliente", back_populates="pedidos")
-    produto = relationship("Produto", back_populates="pedidos")
     forma_pagamento = relationship("FormaPagamento", back_populates="pedidos")
     canal_venda = relationship("CanalVenda", back_populates="pedidos")
     status = relationship("Status", back_populates="pedidos")
+    itens_pedido = relationship("ItensPedido", back_populates="pedido")
 
 
 # Criando as tabelas
@@ -186,27 +195,27 @@ estados_brasil = [
 ]
 
 for nome, sigla in estados_brasil:
-    estado = Estado(nome=nome, sigla=sigla)
+    estado = Estado(nome_estado=nome, sigla_estado=sigla)
     session.add(estado)
 
 session.commit()
 
 generos = ["Masculino", "Feminino", "Outro"]
 for s in generos:
-    session.add(Genero(descricao=s))
+    session.add(Genero(descricao_genero=s))
 
 session.commit()
 
 estados_civis = ["Solteiro", "Casado", "Divorciado", "Viúvo"]
 for ec in estados_civis:
-    session.add(EstadoCivil(descricao=ec))
+    session.add(EstadoCivil(descricao_estado_civil=ec))
 
 session.commit()
 
 email_marketing = ["sim", "não", "não respondeu"]
 
 for e in email_marketing:
-    session.add(EmailMarketing(email=e))
+    session.add(EmailMarketing(descricao_email_marketing=e))
 
 session.commit()
 
@@ -217,36 +226,36 @@ email_marketing = session.query(EmailMarketing).all()
 
 #### CLIENTE ####
 
-for _ in range(200000):  # Cria 200.000 Clientes
+for _ in range(10):  # Cria 200.000 Clientes
     cliente = Cliente(
         primeiro_nome=fake.first_name(),
-        segundo_nome=fake.last_name(),
-        genero_id=random.choice(generos).id,
-        estado_civil_id=random.choice(estados_civis).id,
+        sobrenome=fake.last_name(),
+        id_genero=random.choice(generos).id_genero,
+        id_estado_civil=random.choice(estados_civis).id_estado_civil,
         data_nascimento=fake.date_of_birth(minimum_age=18, maximum_age=80),
         cpf=fake.unique.cpf(),
         rg=fake.unique.rg(),
         email=fake.unique.email(),
         telefone=fake.bothify(text="(0##) 9####-####"),
         endereco=fake.address(),
-        estado_id=random.choice(estados).id,
-        email_marketing_id=random.choice(email_marketing).id,
+        id_estado=random.choice(estados).id_estado,
+        id_email_marketing=random.choice(email_marketing).id_email_marketing,
     )
     session.add(cliente)
 
 session.commit()
 
 categorias = [
-    Categoria(nome="Eletrônicos"),
-    Categoria(nome="Moda"),
-    Categoria(nome="Alimentos"),
-    Categoria(nome="Móveis"),
-    Categoria(nome="Eletrodomésticos"),
-    Categoria(nome="Livros"),
-    Categoria(nome="Jogos"),
-    Categoria(nome="Beleza"),
-    Categoria(nome="Esportes"),
-    Categoria(nome="Automóveis"),
+    Categoria(nome_categoria="Eletrônicos"),
+    Categoria(nome_categoria="Moda"),
+    Categoria(nome_categoria="Alimentos"),
+    Categoria(nome_categoria="Móveis"),
+    Categoria(nome_categoria="Eletrodomésticos"),
+    Categoria(nome_categoria="Livros"),
+    Categoria(nome_categoria="Jogos"),
+    Categoria(nome_categoria="Beleza"),
+    Categoria(nome_categoria="Esportes"),
+    Categoria(nome_categoria="Automóveis"),
 ]
 
 for categoria in categorias:
@@ -254,14 +263,17 @@ for categoria in categorias:
 
 session.commit()
 
+categorias_dict = {categoria.nome_categoria: categoria.id_categoria for categoria in session.query(Categoria).all()}
+print(categorias_dict)
+
 #### PRODUTO ####
 produtos = []
-for _ in range(5000):  # Cria 5.000 Produtos
+for _ in range(5):  # Cria 5.000 Produtos
     produto = Produto(
-        nome=fake.word().capitalize(),
-        categoria_id=random.choice(categorias).id,
-        preco=round(random.uniform(10, 500), 2),
-        estoque=random.randint(5, 50),
+        nome_produto=fake.word().capitalize(),
+        id_categoria=random.choice(categorias).id_categoria,
+        preco_unitario=round(random.uniform(10, 500), 2),
+        quantidade_estoque=random.randint(5, 50),
     )
     session.add(produto)
     produtos.append(produto)
@@ -269,11 +281,11 @@ for _ in range(5000):  # Cria 5.000 Produtos
 session.commit()
 
 formas_pagamento = [
-    FormaPagamento(metodo="Cartão de Crédito"),
-    FormaPagamento(metodo="Boleto Bancário"),
-    FormaPagamento(metodo="Pix"),
-    FormaPagamento(metodo="Transferência Bancária"),
-    FormaPagamento(metodo="Cartão de Débito"),
+    FormaPagamento(metodo_pagamento="Cartão de Crédito"),
+    FormaPagamento(metodo_pagamento="Boleto Bancário"),
+    FormaPagamento(metodo_pagamento="Pix"),
+    FormaPagamento(metodo_pagamento="Transferência Bancária"),
+    FormaPagamento(metodo_pagamento="Cartão de Débito"),
 ]
 for forma in formas_pagamento:
     session.add(forma)
@@ -281,12 +293,12 @@ for forma in formas_pagamento:
 session.commit()
 
 canais_venda = [
-    CanalVenda(nome="Loja Online"),
-    CanalVenda(nome="Marketplace"),
-    CanalVenda(nome="Loja Física"),
-    CanalVenda(nome="Redes Sociais"),
-    CanalVenda(nome="E-mail Marketing"),
-    CanalVenda(nome="Call Center"),
+    CanalVenda(nome_canal_venda="Loja Online"),
+    CanalVenda(nome_canal_venda="Marketplace"),
+    CanalVenda(nome_canal_venda="Loja Física"),
+    CanalVenda(nome_canal_venda="Redes Sociais"),
+    CanalVenda(nome_canal_venda="E-mail Marketing"),
+    CanalVenda(nome_canal_venda="Call Center"),
 ]
 for canal in canais_venda:
     session.add(canal)
@@ -294,11 +306,11 @@ for canal in canais_venda:
 session.commit()
 
 status_pedidos = [
-    Status(descricao="Pendente"),
-    Status(descricao="Pago"),
-    Status(descricao="Enviado"),
-    Status(descricao="Entregue"),
-    Status(descricao="Cancelado"),
+    Status(descricao_status="Pendente"),
+    Status(descricao_status="Pago"),
+    Status(descricao_status="Enviado"),
+    Status(descricao_status="Entregue"),
+    Status(descricao_status="Cancelado"),
 ]
 for status in status_pedidos:
     session.add(status)
@@ -314,17 +326,15 @@ status_pedidos = session.query(Status).all()
 
 #### PEDIDO ####
 
-for _ in range(800000):  # Cria 800.000 Pedidos
+for _ in range(80):  # Cria 800.000 Pedidos
     cliente = random.choice(clientes)
-    produto = random.choice(produtos)
     forma_pagamento = random.choice(formas_pagamento)
     canal_venda = random.choice(canais_venda)
     status = random.choice(status_pedidos)
-    quantidade = random.randint(1, 5)
     data_pedido = fake.date_this_year()
-    subtotal = round(produto.preco * quantidade, 2)
-    frete = round(random.uniform(7, 95), 2) if produto.preco < 400 else 0
-    total = round(subtotal + frete, 2)
+    subtotal = 0
+    frete = round(random.uniform(7, 95), 2) if produto.preco_unitario < 400 else 0
+    total = 0
     data_entrega = (
         fake.random_element(
             elements=(
@@ -333,16 +343,14 @@ for _ in range(800000):  # Cria 800.000 Pedidos
                 + pd.Timedelta(days=18),
             )
         )
-        if status.descricao == "Entregue"
+        if status.descricao_status == "Entregue"
         else None
     )
     pedido = Pedido(
-        cliente_id=cliente.id,
-        produto_id=produto.id,
-        forma_pagamento_id=forma_pagamento.id,
-        canal_venda_id=canal_venda.id,
-        status_id=status.id,
-        quantidade=quantidade,
+        id_cliente=cliente.id_cliente,
+        id_forma_pagamento=forma_pagamento.id_forma_pagamento,
+        id_canal_venda=canal_venda.id_canal_venda,
+        id_status=status.id_status,
         data_pedido=data_pedido,
         subtotal=subtotal,
         frete=frete,
@@ -350,6 +358,27 @@ for _ in range(800000):  # Cria 800.000 Pedidos
         data_entrega=data_entrega,
     )
     session.add(pedido)
+    session.flush()
+
+    total_pedido = 0
+    for _ in range(random.randint(1, 5)):  # Cria 1 a 5 Itens por Pedido
+        produto = random.choice(produtos)
+        quantidade = random.randint(1, 10)
+        preco_unitario = produto.preco_unitario
+        subtotal = round(quantidade * preco_unitario, 2)
+
+        itens_pedido = ItensPedido(
+            id_pedido=pedido.id_pedido,
+            id_produto=produto.id_produto,
+            quantidade=quantidade,
+            preco_unitario=preco_unitario,
+            valor_subtotal=subtotal,
+        )
+        session.add(itens_pedido)
+        total_pedido += subtotal
+
+    pedido.subtotal = round(total_pedido, 2)
+    pedido.total = round(total_pedido + frete, 2)
 
 session.commit()
 
