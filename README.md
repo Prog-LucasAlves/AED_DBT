@@ -47,6 +47,10 @@ AED_DBT
 ├── README.md                     # Documentação do projeto
 ```
 
+## 🔍 Diagrama do banco de dados
+
+![ ](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/imagem/diagrama.png)
+
 ## 🚀 Como Configurar e Executar
 
 ### 🔹 1. Instalar Dependências
