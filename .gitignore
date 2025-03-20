@@ -29,7 +29,7 @@ MANIFEST
 /logs
 *.txt
 /AUTH_v
-/dbt_packages
+*dbt_packages
 *lock.yml
 
 # PyInstaller

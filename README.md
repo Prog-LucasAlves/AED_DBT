@@ -13,30 +13,36 @@ Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQ
 - [**Faker**](https://faker.readthedocs.io/en/stable/) → Geração de dados fictícios
 - [**Pandas**](https://pandas.pydata.org/) → Manipulação de dados
 - [**SQLAlchemy**](https://www.sqlalchemy.org/) → Inserção de dados no banco
-- [**Render**](...) -> Deploy do bancod de dados PostgreSQL
+- [**Render**](...) -> Deploy do banco de dados PostgreSQL
 
 ## 📂 Estrutura do Projeto
 
 ```bash
 AED_DBT
-├── macros/                   # Funções reutilizáveis para SQL dinâmico
-├── models/                   # Macros personalizados
-    ├── marketing/
-        ├── mart_clientes_ativos.sql
-    ├── marts/                # Modelos finais (fatos e dimensões para BI)
-    ├── staging/              # Modelos intermediários de limpeza e padronização
-        ├── stg_clientes.sql
-        ├── stg_pedidos.sql
-├── tests                     # Testes para garantir qualidade dos dados -> `dbt.utils`
-├── .flake8                   # Configuração flake8
-├── .gitignore                # Arquivos a serem ignorados
-├── pre-commit-config.yaml    # Configuração precommit
-├── .python-version           # Versão do Python utilizada no projeto
-├── dbt_project.yml           # Configuração do DBT
-├── gerar_dados.py            # Script para geração de dados fictícios com Faker
-├── packages.yml              # Pacotes instalados no DBT
-├── pyproject.toml            # Bibliotecas utlizadas no projeto
-├── README.md                 # Descrição do Projeto
+├── dbt_project                   # Diretório do DBT
+    ├── macros/                   # Funções reutilizáveis para SQL dinâmico
+    ├── models/                   # Macros personalizados
+        ├── marketing/
+            ├── mart_clientes_ativos.sql
+        ├── marts/                # Modelos finais (fatos e dimensões para BI)
+        ├── staging/              # Modelos intermediários de limpeza e padronização
+            ├── stg_clientes.sql
+            ├── stg_pedidos.sql
+    ├── tests                     # Testes para garantir a integridade dos modelos DBT
+    ├── dbt_project.yml           # Configuração principal do DBT
+    ├── packages.yml              # Pacotes instalados no DBT
+├── scripts
+    ├── insert_data.py            # Script para geração de dados fictícios com Faker
+├── src                           # Configuração banco de dados (SQLAlchemy)
+    ├── crud.py                   # Funções para criar, ler, atualizar e deletar dados (CRUD)
+    ├── database.py               # Configuração do banco de dados (SQLAlchemy, conexões)
+    ├── models.py                 # Definição dos modelos do banco de dados (ORM)
+├── .flake8                       # Configuração flake8
+├── .gitignore                    # Arquivos a serem ignorados
+├── pre-commit-config.yaml        # Configuração precommit
+├── .python-version               # Versão do Python utilizada no projeto
+├── pyproject.toml                # Lista de dependências do projeto
+├── README.md                     # Documentação do projeto
 ```
 
 ## 🚀 Como Configurar e Executar
