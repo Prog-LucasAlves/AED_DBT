@@ -27,6 +27,12 @@ models:
     marketing:
       +materialized: table
       +schema: marketing
+    faturamento:
+      +materialized: table
+      +schema: faturamento
+    vendas:
+      +materialized: table
+      +schema: vendas
 
 seeds:
   meu_projeto_dbt:
