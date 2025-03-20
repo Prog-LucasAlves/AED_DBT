@@ -1,0 +1,23 @@
+# Nome do site
+site_name: Documentação Projeto AED_DBT
+
+# URL do site (opcional)
+site_url: "https://prog-lucasalves.github.io/AED_DBT/"
+
+# Tema do site
+theme:
+  name: material
+  palette:
+    primary: indigo
+    accent: pink
+
+# Navegação
+nav:
+  - Home: index.md
+  - SQLAlchemy: sqlalchemy.md
+  - DBT Core: dbt.md
+
+# Plugins (opcional)
+plugins:
+  - search  # Habilita pesquisa
+  - mkdocs-minify-plugin  # Otimiza o tamanho final
