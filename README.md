@@ -31,6 +31,7 @@ AED_DBT
     ├── tests                     # Testes para garantir a integridade dos modelos DBT
     ├── dbt_project.yml           # Configuração principal do DBT
     ├── packages.yml              # Pacotes instalados no DBT
+├── docs # Documentação com MkDocs
 ├── scripts
     ├── insert_data.py            # Script para geração de dados fictícios com Faker
 ├── src                           # Configuração banco de dados (SQLAlchemy)
@@ -41,6 +42,7 @@ AED_DBT
 ├── .gitignore                    # Arquivos a serem ignorados
 ├── pre-commit-config.yaml        # Configuração precommit
 ├── .python-version               # Versão do Python utilizada no projeto
+├── mkdocs.yml # Configuração do MkDocs
 ├── pyproject.toml                # Lista de dependências do projeto
 ├── README.md                     # Documentação do projeto
 ```
