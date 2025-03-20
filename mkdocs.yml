@@ -7,9 +7,25 @@ site_url: "https://prog-lucasalves.github.io/AED_DBT/"
 # Tema do site
 theme:
   name: material
+  language: pt-BR
   palette:
     primary: indigo
     accent: pink
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+  logo: imagem/imagem.png
+  favicon: imagem/imagem.png
 
 # Navegação
 nav:
