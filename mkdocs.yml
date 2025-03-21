@@ -12,8 +12,8 @@ theme:
     primary: 'indigo'
     accent: 'pink'
   font:
-    text: Roboto
-    code: Roboto Mono
+    text: 'Roboto'
+    code: 'Roboto Mono'
   features:
     - navigation.tabs
     - navigation.sections
@@ -24,8 +24,8 @@ theme:
     - content.tabs.link
     - content.code.annotation
     - content.code.copy
-  logo: imagem/imagem.png
-  favicon: imagem/imagem.png
+  logo: 'imagem/imagem.png'
+  favicon: 'imagem/imagem.png'
 
 # Navegação
 nav:
