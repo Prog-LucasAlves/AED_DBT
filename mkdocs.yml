@@ -30,13 +30,9 @@ theme:
 nav:
   - Home: index.md
   - dbt Core:
-      - Introdução: docs/dbt/intro.md
-      - Configuração: docs/dbt/setup.md
-      - Exemplos: docs/dbt/examples.md
+      - Introdução: 'dbt/intro.md'
   - SQLAlchemy:
-      - Introdução: docs/sqlalchemy/intro.md
-      - Configuração: docs/sqlalchemy/setup.md
-      - Consultas: docs/sqlalchemy/queries.md
+      - Introdução: 'sqlalchemy/intro.md'
 
 
 # Plugins (opcional)
