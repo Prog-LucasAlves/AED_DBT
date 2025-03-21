@@ -1,5 +1,5 @@
 # Nome do site
-site_name:  Projeto AED_DBT
+site_name:  📊 Projeto DBT + Faker + PostgreSQL
 
 # URL do site (opcional)
 site_url: "https://prog-lucasalves.github.io/AED_DBT/"
@@ -25,13 +25,19 @@ theme:
     - content.code.annotation
     - content.code.copy
   logo: 'image/logo.png'
-  favicon: 'image/logo.png'
 
 # Navegação
 nav:
   - Home: index.md
-  - SQLAlchemy: sqlalchemy.md
-  - DBT Core: dbt.md
+  - dbt Core:
+      - Introdução: docs/dbt/intro.md
+      - Configuração: docs/dbt/setup.md
+      - Exemplos: docs/dbt/examples.md
+  - SQLAlchemy:
+      - Introdução: docs/sqlalchemy/intro.md
+      - Configuração: docs/sqlalchemy/setup.md
+      - Consultas: docs/sqlalchemy/queries.md
+
 
 # Plugins (opcional)
 plugins:
