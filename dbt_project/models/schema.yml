@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: stg_status
+    description: "Tabela de vendas agregadas por mês e cliente."
+    columns:
+      - name: id_status
+        description: "Identificador único do status da venda."
