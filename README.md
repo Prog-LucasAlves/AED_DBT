@@ -2,6 +2,8 @@
 
 Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQL**, gerados com **Faker** para simular pedidos, clientes e vendas.
 
+[**Documentação Auxiliar**](https://aed-dbt.onrender.com/#!/overview)
+
 ## 📌 Visão Geral
 
 **Este projeto DBT foi desenvolvido para modelagem e análise de dados de um e-commerce, garantindo insights detalhados sobre faturamento, clientes, produtos e operações. Utilizando o DBT (Data Build Tool) em conjunto com PostgreSQL, estruturamos um pipeline de dados eficiente para análise e geração de relatórios.**
@@ -13,7 +15,7 @@ Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQ
 - [**Faker**](https://faker.readthedocs.io/en/stable/) → Geração de dados fictícios
 - [**Pandas**](https://pandas.pydata.org/) → Manipulação de dados
 - [**SQLAlchemy**](https://www.sqlalchemy.org/) → Inserção de dados no banco
-- [**Render**](...) -> Deploy do banco de dados PostgreSQL
+- [**Render**](https://render.com/) -> Deploy do banco de dados PostgreSQL
 
 ## 📂 Estrutura do Projeto
 
@@ -31,7 +33,6 @@ AED_DBT
     ├── tests                     # Testes para garantir a integridade dos modelos DBT
     ├── dbt_project.yml           # Configuração principal do DBT
     ├── packages.yml              # Pacotes instalados no DBT
-├── docs                          # Documentação com MkDocs
 ├── scripts
     ├── insert_data.py            # Script para geração de dados fictícios com Faker
 ├── src                           # Configuração banco de dados (SQLAlchemy)
