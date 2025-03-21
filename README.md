@@ -31,7 +31,7 @@ AED_DBT
     ├── tests                     # Testes para garantir a integridade dos modelos DBT
     ├── dbt_project.yml           # Configuração principal do DBT
     ├── packages.yml              # Pacotes instalados no DBT
-├── docs # Documentação com MkDocs
+├── docs                          # Documentação com MkDocs
 ├── scripts
     ├── insert_data.py            # Script para geração de dados fictícios com Faker
 ├── src                           # Configuração banco de dados (SQLAlchemy)
@@ -42,7 +42,7 @@ AED_DBT
 ├── .gitignore                    # Arquivos a serem ignorados
 ├── pre-commit-config.yaml        # Configuração precommit
 ├── .python-version               # Versão do Python utilizada no projeto
-├── mkdocs.yml # Configuração do MkDocs
+├── mkdocs.yml                    # Configuração do MkDocs
 ├── pyproject.toml                # Lista de dependências do projeto
 ├── README.md                     # Documentação do projeto
 ```
@@ -146,20 +146,12 @@ No exemplo acima, temos dois grupos de modelos:
 - ✅ **Staging** (pré-processamento)
 - ✅ **Marts** (modelo final consolidados)
 
-🔹 Configuração do `staging`:
+🔹 Configuração de um modelo `staging`:
 
 ```yaml
 staging:
   +schema: staging
   +materialized: view
-```
-
-🔹 Configuração do `marts`:
-
-```yaml
-marts:
-  +schema: marts
-  +materialized: table
 ```
 
 - 📌 O que esses parâmetros fazem?
@@ -186,16 +178,16 @@ marts:
 
 ### 🔹 5. Gerar Dados Fictícios
 
-Execute o script para popular o banco:
+Execute o script para popular o banco de dados:
 
 ```bash
-python gerar_dados.py
+python -m scripts.insert_data       # Executar o script para gerar os dados
 ```
 
 ### 🔹 6. Rodar os Modelos DBT
 
 ```bash
-dbt run          # Executar as transformações
+dbt run       # Executar as transformações
 ```
 
 ## 📄 Descrição da Pasta models/staging/
@@ -204,6 +196,7 @@ A pasta models/staging/ no DBT contém os modelos intermediários, que servem co
 
 ## 📊 Modelo mark_clientes_ativos.sql
 
+Exemplo de um modelo:
 O Modelo `mark_clientes_ativos.sql` verifica o total(Quantidade) de pedidos(Com menos de 4 pedidos) por cliente nos últimos 2 meses.
 
 ```sql
@@ -224,6 +217,20 @@ WITH clientes_ativos AS (
 SELECT * FROM clientes_ativos
 ```
 
+## 📊 Models
+
+### - 💰 `faturamento`
+
+### - 📢 `marketing`
+
+### - 🗂️ `marts`
+
+### - 📁 `staging`
+
+1. [stg_status.sql](...)
+
+### - 🛒 `vendas`
+
 ## ✅ Objetivos do Projeto
 
 - ✔️ Simular dados realistas de vendas
@@ -232,23 +239,6 @@ SELECT * FROM clientes_ativos
 - ✔️ Automatizar a modelagem e agregação de dados
 
 Contribuições são bem-vindas! Para sugerir melhorias, abra um Pull Request. 😃🚀
-
-## - 💰 `faturamento`
-
- 1. [**fat_faturamento_mensal.sql**](...)
-
-## - 📢 `marketing`
-
-1. [**mark_cliente_email_marketing.sql**](...)
-2. [**mart_clientes_ativos.sql**](...)
-
-## - 🗂️ `marts`
-
-1. [**mart_pivot_genero_estado_civil.sql**](...)
-
-## - 📁 `staging`
-
-## - 🛒 `vendas`
 
 ## 📜 Licença
 
