@@ -1,8 +1,19 @@
 version: 2
 
 models:
-  - name: stg_status
-    description: "Tabela de vendas agregadas por mês e cliente."
+  - name: stg_tb_status
+    description: "Tabela de status"
     columns:
       - name: id_status
-        description: "Identificador único do status da venda."
+        description: "Identificador único."
+        data_type: int
+        tests:
+          - unique
+          - not_null
+      - name: descricao_status
+        description: "Descrição do status."
+        data_type: varchar
+        tests:
+          - not_null
+    contracts:
+      enforce: true

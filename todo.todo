@@ -2,8 +2,9 @@ Verificação:
     [x] Incluir tabela item pedido
     [x] Verificar os nomes das tabelas e colunas de todas as tabelas(Padronizar)
     [x] Criar arquivos separados para padrão list estados | generos | estados_civis | email_marketing
-    [] Criar arquvivo separado só para as tabelas tables.py
-    [] Atulizar readme
+    [x] Criar arquvivo separado só para as tabelas tables.py
+    [x] Atulizar readme
+    [] mkdocs
     [] Verificar models | padroes(Padronizar)
     -> stg_ Stage → Modelos brutos carregados do banco de dados.
     -> int_ Intermediate → Modelos intermediários usados para transformações.
