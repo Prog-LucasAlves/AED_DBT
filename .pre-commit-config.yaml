@@ -1,12 +1,25 @@
+---
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
-    -   id: check-toml
--   repo: https://github.com/pycqa/flake8
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-toml
+  - repo: https://github.com/pycqa/flake8
     rev: 7.1.2
     hooks:
-    -    id: flake8
+      - id: flake8
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.36.2
+    hooks:
+      - id: yamllint
+  - repo: https://github.com/PabloRMira/sql_formatter
+    rev: 0.6.2
+    hooks:
+      - id: sql_formatter
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.17.2
+    hooks:
+      - id: markdownlint-cli2

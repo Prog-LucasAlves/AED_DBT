@@ -1,7 +1,6 @@
+---
 name: 'meu_projeto_dbt'
 version: '1.0.0'
-config-version: 2
-
 profile: 'AED_DBT'
 
 model-paths: ["models"]
@@ -11,14 +10,16 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
+target-path: "target"
 clean-targets:
   - "target"
   - "dbt_packages"
+  - "logs"
 
 models:
   meu_projeto_dbt:
     staging:
-      +materialized: view
+      materialized: view
       +schema: staging
       +docs:
         node_color: '#FFD700'
