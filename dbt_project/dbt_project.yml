@@ -1,24 +1,21 @@
 ---
-name: meu_projeto_dbt
-version: 1.0.0
-profile: AED_DBT
-model-paths:
-  - models
-analysis-paths:
-  - analyses
-test-paths:
-  - tests
-seed-paths:
-  - seeds
-macro-paths:
-  - macros
-snapshot-paths:
-  - snapshots
-target-path: target
+name: 'meu_projeto_dbt'
+version: '1.0.0'
+profile: 'AED_DBT'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
 clean-targets:
-  - target
-  - dbt_packages
-  - logs
+  - "target"
+  - "dbt_packages"
+  - "logs"
+
 models:
   meu_projeto_dbt:
     staging:
@@ -27,6 +24,7 @@ models:
       +docs:
         node_color: '#FFD700'
         show: true
+
 seeds:
   meu_projeto_dbt:
     +schema: seeds
