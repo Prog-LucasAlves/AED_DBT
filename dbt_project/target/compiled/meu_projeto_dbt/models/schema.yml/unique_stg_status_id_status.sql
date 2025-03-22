@@ -1,12 +1,5 @@
-
-
-
-
-select
-    id_status as unique_field,
-    count(*) as n_records
-
-from "dbtvendas_82ea"."public_staging"."stg_status"
-where id_status is not null
-group by id_status
-having count(*) > 1
+SELECT id_status as unique_field,
+       count(*) as n_records
+FROM   "dbtvendas_82ea"."public_staging"."stg_status"
+WHERE  id_status is not null
+GROUP BY id_status having count(*) > 1;
