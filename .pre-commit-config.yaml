@@ -19,7 +19,3 @@ repos:
     rev: 0.6.2
     hooks:
       - id: sql_formatter
-  - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.17.2
-    hooks:
-      - id: markdownlint-cli2

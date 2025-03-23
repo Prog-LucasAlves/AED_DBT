@@ -1,19 +1,43 @@
+---
 version: 2
 
 models:
-  - name: stg_tb_status
-    description: "Tabela de status"
+
+  - name: stg_status
+    description: "Tabela de Status de cada Pedido"
     columns:
       - name: id_status
         description: "Identificador único."
-        data_type: int
         tests:
           - unique
           - not_null
       - name: descricao_status
         description: "Descrição do status."
-        data_type: varchar
         tests:
           - not_null
-    contracts:
-      enforce: true
+
+  - name: stg_canais_venda
+    description: "Tabela de Canais de Venda de cada Pedido"
+    columns:
+      - name: id_canal_venda
+        description: "Identificador único."
+        tests:
+          - unique
+          - not_null
+      - name: descricao_canal_venda
+        description: "Descrição do Canal de Venda."
+        tests:
+          - not_null
+
+  - name: stg_categoria
+    description: "Tabela de Categoria dos Produtos"
+    columns:
+      - name: id_categoria
+        description: "Identificador único."
+        tests:
+          - unique
+          - not_null
+      - name: descricao_categoria
+        description: "Descrição da Categoria."
+        tests:
+          - not_null

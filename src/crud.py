@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import models, dantic
+from . import models
 from datetime import date
 
 
@@ -63,8 +63,8 @@ def get_cliente(db: Session):
     return db.query(models.Cliente).with_entities(models.Cliente.id_cliente).all()
 
 
-def create_categoria(db: Session, nome_categoria: str):
-    db_categoria = models.Categoria(nome_categoria=nome_categoria)
+def create_categoria(db: Session, descricao_categoria: str):
+    db_categoria = models.Categoria(descricao_categoria=descricao_categoria)
     db.add(db_categoria)
     db.commit()
     db.refresh(db_categoria)
@@ -75,8 +75,8 @@ def get_categoria(db: Session):
     return db.query(models.Categoria).with_entities(models.Categoria.id_categoria).all()
 
 
-def create_produto(db: Session, nome_produto: str, id_categoria: int, preco_unitario: float, quantidade_estoque: int):
-    db_pedido = models.Produto(nome_produto=nome_produto, id_categoria=id_categoria, preco_unitario=preco_unitario, quantidade_estoque=quantidade_estoque)
+def create_produto(db: Session, descricao_produto: str, id_categoria: int, preco_unitario: float, quantidade_estoque: int):
+    db_pedido = models.Produto(descricao_produto=descricao_produto, id_categoria=id_categoria, preco_unitario=preco_unitario, quantidade_estoque=quantidade_estoque)
     db.add(db_pedido)
     db.commit()
     db.refresh(db_pedido)
@@ -91,8 +91,8 @@ def get_produto_preco_unitario(db: Session):
     return db.query(models.Produto).with_entities(models.Produto.id_produto, models.Produto.preco_unitario).all()
 
 
-def create_forma_pagamento(db: Session, metodo_pagamento: str):
-    db_forma_pagamento = models.FormaPagamento(metodo_pagamento=metodo_pagamento)
+def create_forma_pagamento(db: Session, descricao_metodo_pagamento: str):
+    db_forma_pagamento = models.FormaPagamento(descricao_metodo_pagamento=descricao_metodo_pagamento)
     db.add(db_forma_pagamento)
     db.commit()
     db.refresh(db_forma_pagamento)
@@ -103,8 +103,8 @@ def get_forma_pagamento(db: Session):
     return db.query(models.FormaPagamento).with_entities(models.FormaPagamento.id_forma_pagamento).all()
 
 
-def create_canal_venda(db: Session, nome_canal_venda: str):
-    db_canal_venda = models.CanalVenda(nome_canal_venda=nome_canal_venda)
+def create_canal_venda(db: Session, descricao_canal_venda: str):
+    db_canal_venda = models.CanalVenda(descricao_canal_venda=descricao_canal_venda)
     db.add(db_canal_venda)
     db.commit()
     db.refresh(db_canal_venda)
