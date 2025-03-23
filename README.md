@@ -228,7 +228,8 @@ SELECT * FROM clientes_ativos
 
 ### - 📁 `staging`
 
-1. [stg_status.sql](...)
+1. [stg_canais_venda.sql](...)
+2. [stg_status.sql](...)
 
 ### - 🛒 `vendas`
 
