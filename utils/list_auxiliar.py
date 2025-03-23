@@ -58,7 +58,7 @@ CATEGORIAS = [
     "Automóveis",
 ]
 
-produtos_por_categoria = {
+PRODUTOS_POR_CATEGORIA = {
     "Eletrônicos": [
         "Smartphone Ultra X", "Notebook ProBook", "Smart TV 50'' 4K",
         "Fone de Ouvido Bluetooth", "Caixa de Som Portátil",
@@ -103,7 +103,7 @@ produtos_por_categoria = {
     ]
 }
 
-formas_pagamento = [
+FORMAS_PAGAMENTO = [
     "Cartão de Crédito",
     "Boleto Bancário",
     "Pix",
@@ -111,7 +111,7 @@ formas_pagamento = [
     "Cartão de Débito",
 ]
 
-canais_venda = [
+CANAIS_VENDA = [
     "Loja Online",
     "Marketplace",
     "Loja Física",
@@ -120,7 +120,7 @@ canais_venda = [
     "Call Center",
 ]
 
-status_pedidos = [
+STATUS_PEDIDOS = [
     "Pendente",
     "Pago",
     "Enviado",
