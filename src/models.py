@@ -62,7 +62,7 @@ class Cliente(Base):
 class Categoria(Base):
     __tablename__ = "tb_categoria"
     id_categoria = Column(Integer, primary_key=True)
-    nome_categoria = Column(String, nullable=False, unique=True)
+    descricao_categoria = Column(String, nullable=False, unique=True)
 
     produto = relationship("Produto", back_populates="categoria")
 
@@ -70,7 +70,7 @@ class Categoria(Base):
 class Produto(Base):
     __tablename__ = "tb_produto"
     id_produto = Column(Integer, primary_key=True)
-    nome_produto = Column(String, nullable=False)
+    descricao_produto = Column(String, nullable=False)
     id_categoria = Column(Integer, ForeignKey("tb_categoria.id_categoria"), nullable=False)
     preco_unitario = Column(Float, nullable=False)
     quantidade_estoque = Column(Integer, nullable=False)
@@ -82,7 +82,7 @@ class Produto(Base):
 class FormaPagamento(Base):
     __tablename__ = "tb_formas_pagamento"
     id_forma_pagamento = Column(Integer, primary_key=True)
-    metodo_pagamento = Column(String, nullable=False, unique=True)
+    descricao_metodo_pagamento = Column(String, nullable=False, unique=True)
 
     pedido = relationship("Pedido", back_populates="forma_pagamento")
 
@@ -90,7 +90,7 @@ class FormaPagamento(Base):
 class CanalVenda(Base):
     __tablename__ = "tb_canais_venda"
     id_canal_venda = Column(Integer, primary_key=True)
-    nome_canal_venda = Column(String, nullable=False, unique=True)
+    descricao_canal_venda = Column(String, nullable=False, unique=True)
 
     pedido = relationship("Pedido", back_populates="canal_venda")
 
