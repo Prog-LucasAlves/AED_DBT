@@ -33,13 +33,13 @@ def pop_db():
     for categoria in list_auxiliar.CATEGORIAS:
         crud.create_categoria(db, categoria)
 
-    for forma_pagamento in list_auxiliar.formas_pagamento:
+    for forma_pagamento in list_auxiliar.FORMAS_PAGAMENTO:
         crud.create_forma_pagamento(db, forma_pagamento)
 
-    for canal_venda in list_auxiliar.canais_venda:
+    for canal_venda in list_auxiliar.CANAIS_VENDA:
         crud.create_canal_venda(db, canal_venda)
 
-    for status in list_auxiliar.status_pedidos:
+    for status in list_auxiliar.STATUS_PEDIDOS:
         crud.create_status(db, status)
 
     # Obtendo listas de IDs
@@ -74,12 +74,12 @@ def pop_db():
     list_cliente = [c[0] for c in crud.get_cliente(db)]
 
     # Criando produtos
-    for categoria_name, produtos in list_auxiliar.produtos_por_categoria.items():
+    for categoria_name, produtos in list_auxiliar.PRODUTOS_POR_CATEGORIA.items():
         categoria_id = list_categoria[list_auxiliar.CATEGORIAS.index(categoria_name)]
         for produto_name in produtos:
             crud.create_produto(
                 db=db,
-                nome_produto=produto_name,
+                descricao_produto=produto_name,
                 id_categoria=categoria_id,
                 preco_unitario=round(random.uniform(10, 1000), 2),
                 quantidade_estoque=random.randint(1, 100),
