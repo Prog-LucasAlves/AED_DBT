@@ -1,7 +1,7 @@
 import subprocess
 import os
 
-DBT_PROJECT_PATH = os.path.join(os.getcwd(), "dbt_project")
+DBT_PROJECT_PATH = os.path.abspath("dbt_project")
 
 
 def run_dbt_model(mode_name):
