@@ -9,19 +9,20 @@ tab1, tab2, tab3 = st.tabs(["⚙️ DBT Executor", "📊 SQL Query", "📈 Visua
 
 # ====================== 🟢 ABA DBT EXECUTOR ======================
 
-st.header("⚙️ DBT Executor")
+with tab1:
+    st.header("⚙️ DBT Executor")
 
-# Tentar listar os modelos
-st.subheader("📌 Modelos DBT Disponíveis")
-models = dbt_utils.list_dbt_models()
+    # Tentar listar os modelos
+    st.subheader("📌 Modelos DBT Disponíveis")
+    models = dbt_utils.list_dbt_models()
 
-# Debug: Mostrar a saída do DBT
-st.write("DEBUG:", models)
+    # Debug: Mostrar a saída do DBT
+    st.write("DEBUG:", models)
 
-if isinstance(models, list) and len(models) > 0:
-    selected_model = st.selectbox("Selecione um modelo para executar", models)
-else:
-    st.error("Nenhum modelo DBT encontrado ou erro ao carregar.")
+    if isinstance(models, list) and len(models) > 0:
+        selected_model = st.selectbox("Selecione um modelo para executar", models)
+    else:
+        st.error("Nenhum modelo DBT encontrado ou erro ao carregar.")
 
 
 # ====================== 🔵 ABA SQL QUERY ==========================
