@@ -24,7 +24,7 @@ def list_dbt_models():
         if not os.path.exists(DBT_PATH):
             return ["❌ DBT não encontrado. Verifique a instalação."]
 
-        command = [DBT_PATH, "dbt", "ls", "--resource-type", "model"]
+        command = [DBT_PATH, "ls", "--resource-type", "model"]
         result = subprocess.run(command, cwd=DBT_PROJECT_PATH, capture_output=True, text=True)
 
         if result.returncode == 0:
