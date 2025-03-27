@@ -5,32 +5,28 @@ import sql_utils
 
 st.set_page_config(page_title="DBT & SQL App", layout="wide")
 
-tab1, tab2, tab3 = st.tabs(["⚙️ DBT Executor", "📊 SQL Query", "📈 Visualizações"])
-
-# ====================== 🟢 ABA DBT EXECUTOR ======================
-
-with tab1:
-    st.header("⚙️ DBT Executor")
-
-    # Tentar listar os modelos
-    st.subheader("📌 Modelos DBT Disponíveis")
-    models = dbt_utils.list_dbt_models()
-
-    # Debug: Mostrar a saída do DBT
-    st.write("DEBUG:", models)
-
-    if isinstance(models, list) and len(models) > 0:
-        selected_model = st.selectbox("Selecione um modelo para executar", models)
-    else:
-        st.error("Nenhum modelo DBT encontrado ou erro ao carregar.")
-
+tab1, tab2 = st.tabs(["📊 SQL Query", "📈 Visualizações"])
 
 # ====================== 🔵 ABA SQL QUERY ==========================
 
-with tab2:
+with tab1:
     st.title("📊 SQL Query Executor")
 
     if st.button("🔄 Testar Conexão"):
         st.write(sql_utils.test_connection())
+
+    st.header("📄 Consultas SQL")
+
+    query = st.text_area("Digite sua query SQL:")
+    if st.button("Executar Query"):
+        if query:
+            df = sql_utils.execute_query(query)
+            if df is not None:
+                st.dataframe(df)
+            else:
+                st.error("Erro ao executar a query.")
+        else:
+            st.warning("Digite uma consulta SQL válida.")
+
 
 # ====================== 🔴 ABA VISUALIZAÇÕES ======================
