@@ -14,6 +14,7 @@ psycopg2-binary = "^2.9.10"
 sqlalchemy = "^2.0.39"
 tqdm = "^4.67.1"
 streamlit = "^1.44.0"
+dbt = "^1.0.0.38.34"
 
 
 [tool.poetry.group.dev.dependencies]
