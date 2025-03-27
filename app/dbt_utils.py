@@ -1,38 +1,33 @@
 import subprocess
 import os
 
-# Caminho do projeto DBT (altere se necessário)
-DBT_PROJECT_PATH = os.getenv("PATH")
+# Caminho do projeto DBT
+DBT_PROJECT_PATH = os.path.abspath("./dbt_project")
 
 
-def run_dbt_model(model_name):
-    """
-    Executa um modelo DBT específico.
+# Encontrar o caminho correto do dbt no Render
+def get_dbt_path():
+    dbt_path = subprocess.run(["which", "dbt"], capture_output=True, text=True).stdout.strip()
 
-    :param model_name: Nome do modelo a ser executado
-    :return: Mensagem de sucesso ou erro
-    """
-    try:
-        command = ["dbt", "run", "--model", model_name]
-        result = subprocess.run(command, cwd=DBT_PROJECT_PATH, capture_output=True, text=True)
+    # Caso o which dbt não encontre, definir manualmente
+    if not dbt_path:
+        dbt_path = "/opt/render/project/src/.venv/bin/dbt"  # Caminho padrão no Render
 
-        if result.returncode == 0:
-            return f"✅ Modelo {model_name} executado com sucesso.\n\n{result.stdout}"
-        else:
-            return f"❌ Erro ao executar o modelo {model_name}.\n\n{result.stderr}"
+    return dbt_path
 
-    except Exception as e:
-        return f"⚠️ Erro inesperado: {str(e)}"
+
+DBT_PATH = get_dbt_path()
 
 
 def list_dbt_models():
     """
     Lista todos os modelos DBT disponíveis no projeto.
-
-    :return: Lista de nomes dos modelos ou mensagem de erro
     """
     try:
-        command = ["dbt", "ls", "--resource-type", "model"]
+        if not os.path.exists(DBT_PATH):
+            return ["❌ DBT não encontrado. Verifique a instalação."]
+
+        command = [DBT_PATH, "ls", "--resource-type", "model"]
         result = subprocess.run(command, cwd=DBT_PROJECT_PATH, capture_output=True, text=True)
 
         if result.returncode == 0:
