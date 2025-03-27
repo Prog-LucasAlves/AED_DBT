@@ -8,20 +8,20 @@ st.set_page_config(page_title="DBT & SQL App", layout="wide")
 tab1, tab2, tab3 = st.tabs(["⚙️ DBT Executor", "📊 SQL Query", "📈 Visualizações"])
 
 # ====================== 🟢 ABA DBT EXECUTOR ======================
-with tab1:
-    st.title("⚙️ DBT Executor")
 
-    st.subheader("📌 Modelos DBT Disponíveis")
-    models = dbt_utils.list_dbt_models()
+st.header("⚙️ DBT Executor")
 
-    if isinstance(models, list):
-        selected_model = st.selectbox("Selecione um modelo:", models)
-    else:
-        st.error("❌ Erro ao listar modelos do dbt.")
+# Tentar listar os modelos
+st.subheader("📌 Modelos DBT Disponíveis")
+models = dbt_utils.list_dbt_models()
 
-    if st.button("🚀 Rodar Modelo"):
-        result = dbt_utils.run_dbt_model(selected_model)
-        st.text_area("📜 Resultado", result, height=300)
+# Debug: Mostrar a saída do DBT
+st.write("DEBUG:", models)
+
+if isinstance(models, list) and len(models) > 0:
+    selected_model = st.selectbox("Selecione um modelo para executar", models)
+else:
+    st.error("Nenhum modelo DBT encontrado ou erro ao carregar.")
 
 
 # ====================== 🔵 ABA SQL QUERY ==========================
