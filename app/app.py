@@ -34,13 +34,3 @@ with tab2:
         st.write(sql_utils.test_connection())
 
 # ====================== 🔴 ABA VISUALIZAÇÕES ======================
-
-with tab3:
-    st.title("📈 Visualizações de Dados")
-
-    if st.button("🔄 Carregar Dados do Banco"):
-        df = sql_utils.execute_query("SELECT * FROM tb_cliente")
-        if isinstance(df, pd.DataFrame):
-            st.dataframe(df)
-        else:
-            st.error("❌ Erro ao carregar dados do banco de dados.")
