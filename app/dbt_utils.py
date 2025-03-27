@@ -22,7 +22,7 @@ def run_dbt_model(mode_name):
 
 def list_dbt_models():
     try:
-        command = ["dbt", "ls"]
+        command = ["dbt", "ls", "--resource-type", "model"]
         result = subprocess.run(command, cwd=DBT_PROJECT_PATH, capture_output=True, text=True)
 
         if result.returncode == 0:
