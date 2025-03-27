@@ -33,7 +33,7 @@ with tab2:
 
 # ====================== 🔴 ABA VISUALIZAÇÕES ======================
 with tab3:
-    st.header("📈 Visualizações de Dados")
+    st.title("📈 Visualizações de Dados")
 
     if st.button("🔄 Carregar Dados do Banco"):
         df = sql_utils.execute_query("SELECT * FROM tb_cliente")
