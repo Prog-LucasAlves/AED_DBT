@@ -22,16 +22,13 @@ def run_dbt_model(mode_name):
 
 def list_dbt_models():
     try:
-        command = ["dbt", "ls", "--resource-type", "model"]
-        result = subprocess.run(command, cwd=DBT_PROJECT_PATH, capture_output=True, text=True)
+        result = subprocess.run(["dbt", "ls", "--resource-type", "model"], capture_output=True, text=True)
 
         if result.returncode == 0:
             models = result.stdout.strip().split("\n")
-            return models
+            return models if models else ["Nenhum modelo encontrado."]
         else:
-            print("❌ Erro ao listar os modelos do dbt.")
-            return []
+            return [f"❌ Erro ao listar modelos: {result.stderr}"]
 
     except Exception as e:
-        print(f"⚠️ Erro inesperado: {str(e)}")
-        return []
+        return [f"❌ Erro ao executar o DBT: {str(e)}"]
