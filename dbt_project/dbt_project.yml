@@ -22,7 +22,7 @@ models:
       materialized: view
       +schema: staging
       +docs:
-        node_color: '#FFD700'
+        node_color: '#c0c0c0'
         show: true
 
 seeds:
