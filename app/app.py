@@ -26,6 +26,7 @@ with tab1:
 
 
 # ====================== 🔵 ABA SQL QUERY ==========================
+
 with tab2:
     st.title("📊 SQL Query Executor")
 
@@ -33,6 +34,7 @@ with tab2:
         st.write(sql_utils.test_connection())
 
 # ====================== 🔴 ABA VISUALIZAÇÕES ======================
+
 with tab3:
     st.title("📈 Visualizações de Dados")
 
