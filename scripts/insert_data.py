@@ -18,7 +18,7 @@ def criar_pedidos_batch(batch_data):
     itens_pedido = []
 
     for _ in tqdm(range(batch_data['batch_size']), desc="Criando pedidos"):
-        data_pedido = fake.date_this_year()
+        data_pedido = fake.date_between(start_date="-8y", end_date="today")
         subtotal = 0
         id_cliente = random.choice(batch_data['list_cliente'])
         id_forma_pagamento = random.choice(batch_data['list_forma_pagamento'])
@@ -97,7 +97,7 @@ def pop_db():
                 "id_estado": random.choice(list_estado),
                 "id_email_marketing": random.choice(list_email_marketing),
             }
-            for _ in tqdm(range(80), desc="Criando clientes")
+            for _ in tqdm(range(150000), desc="Criando clientes")
         ]
         db.bulk_insert_mappings(models.Cliente, clientes)
         db.commit()
@@ -121,8 +121,8 @@ def pop_db():
         list_preco_unitario = {p[0]: p[1] for p in crud.get_produto_preco_unitario(db)}
 
         # Criando pedidos em paralelo
-        num_processos = 10  # Ajuste conforme o hardware
-        batch_size = 500  # Número de pedidos por processo
+        num_processos = 12  # Ajuste conforme o hardware
+        batch_size = 70000  # Número de pedidos por processo
 
         batches = []
         for i in range(num_processos):
