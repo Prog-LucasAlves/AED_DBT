@@ -2,7 +2,7 @@ import subprocess
 import os
 
 # Caminho do projeto DBT (altere se necessário)
-DBT_PROJECT_PATH = os.path.abspath("./dbt_project")
+DBT_PROJECT_PATH = os.path.abspath("./dbt_project/")
 
 
 def run_dbt_model(model_name):
