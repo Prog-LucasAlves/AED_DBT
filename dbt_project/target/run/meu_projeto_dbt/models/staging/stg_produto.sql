@@ -1,8 +1,17 @@
-CREATE VIEW "dbtvendas_82ea"."public_staging"."stg_produto__dbt_tmp" as (with produto AS (SELECT id_produto,
-                                                                                                 descricao_produto,
-                                                                                                 id_categoria,
-                                                                                                 preco_unitario,
-                                                                                                 quantidade_estoque
-                                                                                          FROM   public.tb_produto)
-SELECT *
-FROM   produto);
+CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_PRODUTO__DBT_TMP
+
+
+AS (
+    WITH PRODUTO AS (
+        SELECT
+            ID_PRODUTO,
+            DESCRICAO_PRODUTO,
+            ID_CATEGORIA,
+            PRECO_UNITARIO,
+            QUANTIDADE_ESTOQUE
+        FROM PUBLIC.TB_PRODUTO
+    )
+
+    SELECT *
+    FROM PRODUTO
+);

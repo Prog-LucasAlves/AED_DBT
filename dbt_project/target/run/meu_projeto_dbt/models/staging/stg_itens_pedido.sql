@@ -1,0 +1,23 @@
+CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_ITENS_PEDIDO__DBT_TMP
+
+
+AS (
+    WITH ITENS_PEDIDO AS (
+        SELECT
+            ID_ITEM_PRODUTO,
+
+            ID_PEDIDO,
+
+            ID_PRODUTO,
+
+            QUANTIDADE,
+
+            PRECO_UNITARIO,
+
+            VALOR_SUBTOTAL
+
+        FROM PUBLIC.TB_ITENS_PEDIDO
+    )
+
+    SELECT * FROM ITENS_PEDIDO
+);

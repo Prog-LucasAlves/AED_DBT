@@ -1,5 +1,7 @@
-SELECT id_canal_venda as unique_field,
-       count(*) as n_records
-FROM   "dbtvendas_82ea"."public_staging"."stg_canais_venda"
-WHERE  id_canal_venda is not null
-GROUP BY id_canal_venda having count(*) > 1;
+SELECT
+    ID_CANAL_VENDA AS UNIQUE_FIELD,
+    count(*) AS N_RECORDS
+FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_CANAIS_VENDA
+WHERE ID_CANAL_VENDA IS NOT NULL
+GROUP BY ID_CANAL_VENDA
+HAVING count(*) > 1;
