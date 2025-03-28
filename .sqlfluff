@@ -4,6 +4,7 @@ dialect = postgres
 runaway_limit = 10
 max_line_length = 80
 indent_unit = space
+ignore = L039
 
 [sqlfluff:templater:dbt]
 profiles_dir = .
@@ -38,6 +39,3 @@ capitalisation_policy = upper
 
 [sqlfluff:rules:ambiguous.column_references]  # Number in group by
 group_by_and_order_by_style = implicit
-
-[sqlfluff:rules:L039]
-forbid_trailing_semicolon = False
