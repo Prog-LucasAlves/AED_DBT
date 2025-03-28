@@ -25,6 +25,14 @@ models:
         node_color: '#c0c0c0'
         show: true
 
+    raw:
+      materialized: table
+      +schema: raw
+      +docs:
+        node_color: '#c0c0c0'
+        show: true
+
+
 seeds:
   meu_projeto_dbt:
     +schema: seeds

@@ -1,3 +1,3 @@
-SELECT id_categoria
-FROM   "dbtvendas_82ea"."public_staging"."stg_categoria"
-WHERE  id_categoria is null;
+SELECT ID_CATEGORIA
+FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_CATEGORIA
+WHERE ID_CATEGORIA IS NULL;

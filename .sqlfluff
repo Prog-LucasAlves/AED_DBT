@@ -1,9 +1,10 @@
 [sqlfluff]
-templater = dbt
-dialect = bigquery
+templater = python
+dialect = postgres
 runaway_limit = 10
 max_line_length = 80
 indent_unit = space
+ignore = L039
 
 [sqlfluff:templater:dbt]
 profiles_dir = .

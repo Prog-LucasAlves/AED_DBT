@@ -1,5 +1,14 @@
-CREATE VIEW "dbtvendas_82ea"."public_staging"."stg_canais_venda__dbt_tmp" as (with canais_venda AS (SELECT id_canal_venda,
-                                                                                                           descricao_canal_venda
-                                                                                                    FROM   public.tb_canais_venda)
-SELECT *
-FROM   canais_venda);
+CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_CANAIS_VENDA__DBT_TMP
+
+
+AS (
+    WITH CANAIS_VENDA AS (
+        SELECT
+            ID_CANAL_VENDA,
+            DESCRICAO_CANAL_VENDA
+        FROM PUBLIC.TB_CANAIS_VENDA
+    )
+
+    SELECT *
+    FROM CANAIS_VENDA
+);

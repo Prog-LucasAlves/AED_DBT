@@ -12,10 +12,6 @@ repos:
     hooks:
       - id: flake8
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.36.2
+    rev: v1.37.0
     hooks:
       - id: yamllint
-  - repo: https://github.com/PabloRMira/sql_formatter
-    rev: 0.6.2
-    hooks:
-      - id: sql_formatter
