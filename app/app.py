@@ -11,14 +11,13 @@ st.title("📈 Dashboard de Vendas")
 df = pd.DataFrame(sql_utils.execute_query("SELECT * FROM public_raw.raw_valor_total_canal_venda"))
 
 ####### Colunas #####
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3 = st.columns(3)
 
 ####### 🔵 Vendas por Canal de Venda 🔵 #######
 with col1:
-    st.write("📊 Vendas por Canal de Venda")
 
     # Exibindo os dados em formato de tabela
-    st.subheader("Dados de Vendas por Canal de Venda")
+    st.title("Dados de Vendas por Canal de Venda")
     st.dataframe(df)
 
     # Criando um gráfico de barras para mostrar o total de vendas por canal
