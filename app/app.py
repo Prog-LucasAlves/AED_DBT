@@ -53,12 +53,12 @@ with col1:
 with col2:
 
     # Exibindo os dados em formato de tabela
-    st.markdown("<h2 style='font-size:22px;'>📊 Dados de Vendas por Canal de Venda</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size:22px;'>📊 Dados de Vendas por Forma de Pagamento</h2>", unsafe_allow_html=True)
     st.dataframe(valorTotalFormaPagamento)
 
     # Criando um gráfico de barras para mostrar o total de vendas por canal
     fig = px.bar(valorTotalFormaPagamento,
-                 x='descricao_metodo_pagameto',
+                 x='descricao_metodo_pagamento',
                  y='total_formatado',
                  title="Total de Vendas por Canal de Venda",
                  labels={'descricao_metodo_pagameto': 'Canal de Venda', 'total_formatado': 'Total de Vendas'},
@@ -72,10 +72,10 @@ with col2:
     # Verifica se a coluna 'percentual' existe antes de criar o gráfico de pizza
     if 'percentual' in valorTotalFormaPagamento.columns:
         fig_pie = px.pie(valorTotalFormaPagamento,
-                         names='descricao_metodo_pagameto',
+                         names='descricao_metodo_pagamento',
                          values='percentual',
                          title="Distribuição Percentual de Vendas por Canal de Venda",
-                         labels={'descricao_metodo_pagameto': 'Canal de Venda', 'percentual': 'Percentual'})
+                         labels={'descricao_metodo_pagamento': 'Canal de Venda', 'percentual': 'Percentual'})
         fig_pie.update_layout(title_font_size=22)
 
         # Exibindo o gráfico de pizza dentro do mesmo bloco
