@@ -17,7 +17,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
 
     # Exibindo os dados em formato de tabela
-    st.markdown("<h2 style='font-size:15px;'>📊 Dados de Vendas por Canal de Venda</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='font-size:22px;'>📊 Dados de Vendas por Canal de Venda</h2>", unsafe_allow_html=True)
     st.dataframe(df)
 
     # Criando um gráfico de barras para mostrar o total de vendas por canal
@@ -28,7 +28,7 @@ with col1:
                  labels={'descricao_canal_venda': 'Canal de Venda', 'total_formatado': 'Total de Vendas'},
                  color='total_formatado',
                  color_continuous_scale='Viridis')
-    fig.update_layout(title_font_size=15)
+    fig.update_layout(title_font_size=22)
 
     # Exibindo o gráfico
     st.plotly_chart(fig)
@@ -40,7 +40,7 @@ with col1:
                          values='percentual',
                          title="Distribuição Percentual de Vendas por Canal de Venda",
                          labels={'descricao_canal_venda': 'Canal de Venda', 'percentual': 'Percentual'})
-        fig_pie.update_layout(title_font_size=15)
+        fig_pie.update_layout(title_font_size=22)
 
         # Exibindo o gráfico de pizza dentro do mesmo bloco
         st.plotly_chart(fig_pie)
