@@ -1,5 +1,9 @@
-with canais_venda as (SELECT id_canal_venda,
-                             descricao_canal_venda
-                      FROM   public.tb_canais_venda)
+WITH CANAIS_VENDA AS (
+    SELECT
+        ID_CANAL_VENDA,
+        DESCRICAO_CANAL_VENDA
+    FROM PUBLIC.TB_CANAIS_VENDA
+)
+
 SELECT *
-FROM   canais_venda;
+FROM CANAIS_VENDA

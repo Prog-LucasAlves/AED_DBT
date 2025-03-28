@@ -1,5 +1,9 @@
-with genero as (SELECT id_genero,
-                       descricao_genero
-                FROM   public.tb_genero)
+WITH GENERO AS (
+    SELECT
+        ID_GENERO,
+        DESCRICAO_GENERO
+    FROM PUBLIC.TB_GENERO
+)
+
 SELECT *
-FROM   genero;
+FROM GENERO

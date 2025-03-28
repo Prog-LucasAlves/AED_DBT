@@ -1,5 +1,9 @@
-with categoria as (SELECT id_categoria,
-                          descricao_categoria
-                   FROM   public.tb_categoria)
+WITH CATEGORIA AS (
+    SELECT
+        ID_CATEGORIA,
+        DESCRICAO_CATEGORIA
+    FROM PUBLIC.TB_CATEGORIA
+)
+
 SELECT *
-FROM   categoria;
+FROM CATEGORIA
