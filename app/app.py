@@ -27,7 +27,7 @@ with col1:
                  y='total_formatado',
                  title="Total de Vendas por Canal de Venda",
                  labels={'descricao_canal_venda': 'Canal de Venda', 'total_formatado': 'Total de Vendas'},
-                 color='total',
+                 color='total_formatado',
                  color_continuous_scale='Viridis')
 
     # Exibindo o gráfico
