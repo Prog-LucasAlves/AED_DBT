@@ -3,19 +3,6 @@ version: 2
 
 models:
 
-  - name: stg_status
-    description: "Tabela de Status de cada Pedido"
-    columns:
-      - name: id_status
-        description: "Identificador único."
-        tests:
-          - unique
-          - not_null
-      - name: descricao_status
-        description: "Descrição do status."
-        tests:
-          - not_null
-
   - name: stg_canais_venda
     description: "Tabela de Canais de Venda de cada Pedido"
     columns:
@@ -27,10 +14,11 @@ models:
       - name: descricao_canal_venda
         description: "Descrição do Canal de Venda."
         tests:
+          - unique
           - not_null
 
   - name: stg_categoria
-    description: "Tabela de Categoria dos Produtos"
+    description: "Tabela das Categorias dos Produtos"
     columns:
       - name: id_categoria
         description: "Identificador único."
@@ -39,5 +27,27 @@ models:
           - not_null
       - name: descricao_categoria
         description: "Descrição da Categoria."
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_cliente
+    description: "Tabela com os Dados dos Clientes"
+    columns:
+      - name: id_cliente
+        description: "Identificador único."
+        tests:
+          - unique
+          - not_null
+      - name: primeiro_nome
+        description: "Primeiro nome do Cliente."
+        tests:
+          - not_null
+      - name: sobrenome
+        description: "Sobrenome do Cliente."
+        tests:
+          - not_null
+      - name: id_genero
+        description: "Identificador do Gênero do Cliente."
         tests:
           - not_null
