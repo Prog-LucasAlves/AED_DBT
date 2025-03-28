@@ -8,4 +8,4 @@ SELECT descricao_canal_venda,
        round((total * 100.0 / (SELECT sum(total)
                         FROM   total_por_canal_venda))::numeric, 2) as percentual
 FROM   total_por_canal_venda
-ORDER BY total desc;
+ORDER BY total desc
