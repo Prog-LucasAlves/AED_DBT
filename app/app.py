@@ -30,3 +30,9 @@ with tab1:
 
 
 # ====================== 🔴 ABA VISUALIZAÇÕES ======================
+
+with tab2:
+    st.header("📊 Visualizações de Dados")
+
+    st.write("Vendas por Canal de Venda")
+    st.dataframe(pd.DataFrame(sql_utils.execute_query("SELECT * FROM tb_raw_qtd_clientes")))
