@@ -21,12 +21,12 @@ Este projeto utiliza **DBT Core** para transformar dados em um banco **PostgreSQ
 
 ```bash
 AED_DBT
+├── app                           # Dashboard
 ├── dbt_project                   # Diretório do DBT
     ├── macros/                   # Funções reutilizáveis para SQL dinâmico
     ├── models/                   # Macros personalizados
-        ├── marketing/
-            ├── mart_clientes_ativos.sql
-        ├── marts/                # Modelos finais (fatos e dimensões para BI)
+        ├── raw/                  # Modelos finais (fatos e dimensões para BI)
+            ├── raw_valor_total_canal_venda.sql
         ├── staging/              # Modelos intermediários de limpeza e padronização
             ├── stg_clientes.sql
             ├── stg_pedidos.sql
@@ -187,51 +187,51 @@ python -m scripts.insert_data       # Executar o script para gerar os dados
 
 ### 🔹 6. Rodar os Modelos DBT
 
+-- Roda todos os modelos:
+
 ```bash
 dbt run       # Executar as transformações
+```
+
+-- Roda apenas um modelo específico:
+
+```bash
+dbt run --select <nome_do_modelo>
 ```
 
 ## 📄 Descrição da Pasta models/staging/
 
 A pasta models/staging/ no DBT contém os modelos intermediários, que servem como uma camada de preparação antes da modelagem final. Esses modelos limpam, padronizam e organizam os dados brutos antes de serem usados em modelos analíticos (marts).
 
-## 📊 Modelo mark_clientes_ativos.sql
+## 📊 Modelo raw_valor_total_canal_vendas.sql
 
 Exemplo de um modelo:
-O Modelo `mark_clientes_ativos.sql` verifica o total(Quantidade) de pedidos(Com menos de 4 pedidos) por cliente nos últimos 2 meses.
+o modelo `raw_valor_total_canal_vendas.sql` calcula o valor total de vendas por canal e determina a participação percentual de cada canal no total das vendas.
 
 ```sql
-WITH clientes_ativos AS (
-    SELECT
-        p.cliente_id,
-        COUNT(p.id) AS total_pedidos,
-        c.primeiro_nome AS nome_cliente,
-        c.email,
-        c.telefone
-    FROM {{ ref('stg_pedidos') }} p
-    LEFT JOIN {{ ref('stg_clientes') }} c ON p.cliente_id = c.id
-    WHERE p.data_pedido >= CURRENT_DATE - INTERVAL '2 months'
-    GROUP BY p.cliente_id, c.primeiro_nome, c.email, c.telefone
-    HAVING COUNT(p.id) < 4
-    ORDER BY total_pedidos ASC
-)
-SELECT * FROM clientes_ativos
+with total_por_canal_venda as (SELECT cv.descricao_canal_venda,
+                                      sum(p.total) as total
+                               FROM   {{ ref('stg_pedido') }} p join {{ ref('stg_canais_venda') }} cv
+                                       ON p.id_canal_venda = cv.id_canal_venda
+                               GROUP BY cv.descricao_canal_venda)
+SELECT descricao_canal_venda,
+       'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,
+       round((total * 100.0 / (SELECT sum(total)
+                        FROM   total_por_canal_venda))::numeric, 2) as percentual
+FROM   total_por_canal_venda
+ORDER BY total desc
 ```
 
 ## 📊 Models
 
-### - 💰 `faturamento`
+### - 🗂️ `raw`
 
-### - 📢 `marketing`
-
-### - 🗂️ `marts`
+1. [raw_valor_total_canal_vendas.sql](...)
 
 ### - 📁 `staging`
 
 1. [stg_canais_venda.sql](...)
 2. [stg_status.sql](...)
-
-### - 🛒 `vendas`
 
 ## ✅ Objetivos do Projeto
 
