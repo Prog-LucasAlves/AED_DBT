@@ -1,15 +1,4 @@
 Verificação:
-    [x] Incluir tabela item pedido
-    [x] Verificar os nomes das tabelas e colunas de todas as tabelas(Padronizar)
-    [x] Criar arquivos separados para padrão list estados | generos | estados_civis | email_marketing
-    [x] Criar arquvivo separado só para as tabelas tables.py
-    [x] Atulizar readme
-    [] mkdocs
-    [] Verificar models | padroes(Padronizar)
-    -> stg_ Stage → Modelos brutos carregados do banco de dados.
-    -> int_ Intermediate → Modelos intermediários usados para transformações.
-    -> fct_ Fact → Modelos de fato, agregados e transacionais.
-    -> dim_ Dimension → Modelos de dimensão, contendo atributos descritivos.
-    -> marts_ Mart → Modelos finais usados para consumo em dashboards e relatórios.
-    -> snap_ Snapshot → Modelos para rastrear mudanças ao longo do tempo.
-    [] Data tests
+    [] Incluir dados no db
+    [] Criar consultas Staging
+    [] Verificar/criar models
