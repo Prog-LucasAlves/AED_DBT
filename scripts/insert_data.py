@@ -97,7 +97,7 @@ def pop_db():
                 "id_estado": random.choice(list_estado),
                 "id_email_marketing": random.choice(list_email_marketing),
             }
-            for _ in tqdm(range(150000), desc="Criando clientes")
+            for _ in tqdm(range(15000), desc="Criando clientes")
         ]
         db.bulk_insert_mappings(models.Cliente, clientes)
         db.commit()
@@ -105,13 +105,13 @@ def pop_db():
 
         # Criando produtos em batch
         produtos = []
-        for categoria_name, produtos_lista in list_auxiliar.PRODUTOS_POR_CATEGORIA.items():
+        for categoria_name, produtos_lista in list_auxiliar.PRODUTOS_POR_CATEGORIA2.items():
             categoria_id = list_categoria[list_auxiliar.CATEGORIAS.index(categoria_name)]
-            for produto_name in produtos_lista:
+            for produto_name, preco in produtos_lista.items():
                 produtos.append({
                     "descricao_produto": produto_name,
                     "id_categoria": categoria_id,
-                    "preco_unitario": round(random.uniform(10, 1000), 2),
+                    "preco_unitario": preco,
                     "quantidade_estoque": random.randint(1, 100),
                 })
         db.bulk_insert_mappings(models.Produto, produtos)
@@ -122,7 +122,7 @@ def pop_db():
 
         # Criando pedidos em paralelo
         num_processos = 12  # Ajuste conforme o hardware
-        batch_size = 70000  # Número de pedidos por processo
+        batch_size = 10000  # Número de pedidos por processo
 
         batches = []
         for i in range(num_processos):
