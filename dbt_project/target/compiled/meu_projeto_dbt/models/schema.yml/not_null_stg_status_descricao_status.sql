@@ -1,3 +1,4 @@
-SELECT DESCRICAO_STATUS
-FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_STATUS
-WHERE DESCRICAO_STATUS IS NULL;
+select descricao_status
+from dbtvendas_82ea.public_staging.stg_status
+where descricao_status is null
+;

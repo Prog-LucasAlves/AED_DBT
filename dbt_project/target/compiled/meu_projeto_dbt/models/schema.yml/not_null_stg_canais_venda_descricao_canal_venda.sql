@@ -1,3 +1,4 @@
-SELECT DESCRICAO_CANAL_VENDA
-FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_CANAIS_VENDA
-WHERE DESCRICAO_CANAL_VENDA IS NULL;
+select descricao_canal_venda
+from dbtvendas_82ea.public_staging.stg_canais_venda
+where descricao_canal_venda is null
+;

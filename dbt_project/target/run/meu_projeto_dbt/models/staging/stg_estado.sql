@@ -3,7 +3,9 @@ CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_ESTADO__DBT_TMP
 
 AS (
     WITH ESTADO AS (
+
         SELECT
+
             ID_ESTADO,
 
             DESCRICAO_ESTADO,
@@ -14,5 +16,8 @@ AS (
 
     )
 
-    SELECT * FROM ESTADO
+
+    SELECT *
+
+    FROM ESTADO
 );

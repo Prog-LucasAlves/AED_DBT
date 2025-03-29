@@ -1,12 +1,22 @@
-WITH PRODUTO AS (
-    SELECT
-        ID_PRODUTO,
-        DESCRICAO_PRODUTO,
-        ID_CATEGORIA,
-        PRECO_UNITARIO,
-        QUANTIDADE_ESTOQUE
-    FROM PUBLIC.TB_PRODUTO
-)
+with
+    produto as (
 
-SELECT *
-FROM PRODUTO
+        select
+
+            id_produto,
+
+            descricao_produto,
+
+            id_categoria,
+
+            preco_unitario,
+
+            quantidade_estoque
+
+        from public.tb_produto
+
+    )
+
+select *
+
+from produto

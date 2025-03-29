@@ -1,3 +1,4 @@
-SELECT DESCRICAO_CATEGORIA
-FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_CATEGORIA
-WHERE DESCRICAO_CATEGORIA IS NULL;
+select descricao_categoria
+from dbtvendas_82ea.public_staging.stg_categoria
+where descricao_categoria is null
+;

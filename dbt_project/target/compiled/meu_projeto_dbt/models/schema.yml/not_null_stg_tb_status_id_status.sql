@@ -1,3 +1,3 @@
-SELECT ID_STATUS
-FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_TB_STATUS
-WHERE ID_STATUS IS NULL
+select id_status
+from dbtvendas_82ea.public_staging.stg_tb_status
+where id_status is null

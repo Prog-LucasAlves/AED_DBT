@@ -1,7 +1,6 @@
-SELECT
-    ID_CATEGORIA AS UNIQUE_FIELD,
-    count(*) AS N_RECORDS
-FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_CATEGORIA
-WHERE ID_CATEGORIA IS NOT NULL
-GROUP BY ID_CATEGORIA
-HAVING count(*) > 1;
+select id_categoria as unique_field, count(*) as n_records
+from dbtvendas_82ea.public_staging.stg_categoria
+where id_categoria is not null
+group by id_categoria
+having count(*) > 1
+;

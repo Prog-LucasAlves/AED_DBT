@@ -1,8 +1,4 @@
-WITH STATUS AS (
-    SELECT
-        ID_STATUS,
-        DESCRICAO_STATUS
-    FROM PUBLIC.TB_STATUS
-)
+with status as (select id_status, descricao_status from public.tb_status)
 
-SELECT * FROM STATUS
+select *
+from status

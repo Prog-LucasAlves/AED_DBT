@@ -3,7 +3,9 @@ CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_CLIENTE__DBT_TMP
 
 AS (
     WITH CLIENTE AS (
+
         SELECT
+
             ID_CLIENTE,
 
             PRIMEIRO_NOME,
@@ -32,9 +34,10 @@ AS (
 
         FROM PUBLIC.TB_CLIENTE
 
-
-
     )
 
-    SELECT * FROM CLIENTE
+
+    SELECT *
+
+    FROM CLIENTE
 );

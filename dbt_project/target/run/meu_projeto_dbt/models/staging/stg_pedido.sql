@@ -3,7 +3,9 @@ CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_PEDIDO__DBT_TMP
 
 AS (
     WITH PEDIDO AS (
+
         SELECT
+
             ID_PEDIDO,
 
             ID_CLIENTE,
@@ -28,5 +30,8 @@ AS (
 
     )
 
-    SELECT * FROM PEDIDO
+
+    SELECT *
+
+    FROM PEDIDO
 );
