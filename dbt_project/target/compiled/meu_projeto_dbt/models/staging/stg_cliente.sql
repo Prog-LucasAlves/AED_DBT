@@ -1,35 +1,38 @@
-WITH CLIENTE AS (
-    SELECT
-        ID_CLIENTE,
+with
+    cliente as (
 
-        PRIMEIRO_NOME,
+        select
 
-        SOBRENOME,
+            id_cliente,
 
-        ID_GENERO,
+            primeiro_nome,
 
-        ID_ESTADO_CIVIL,
+            sobrenome,
 
-        DATA_NASCIMENTO,
+            id_genero,
 
-        CPF,
+            id_estado_civil,
 
-        RG,
+            data_nascimento,
 
-        EMAIL,
+            cpf,
 
-        TELEFONE,
+            rg,
 
-        ENDERECO,
+            email,
 
-        ID_ESTADO,
+            telefone,
 
-        ID_EMAIL_MARKETING
+            endereco,
 
-    FROM PUBLIC.TB_CLIENTE
+            id_estado,
 
+            id_email_marketing
 
+        from public.tb_cliente
 
-)
+    )
 
-SELECT * FROM CLIENTE
+select *
+
+from cliente

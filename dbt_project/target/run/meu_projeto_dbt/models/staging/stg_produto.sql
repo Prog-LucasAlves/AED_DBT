@@ -3,15 +3,25 @@ CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_PRODUTO__DBT_TMP
 
 AS (
     WITH PRODUTO AS (
+
         SELECT
+
             ID_PRODUTO,
+
             DESCRICAO_PRODUTO,
+
             ID_CATEGORIA,
+
             PRECO_UNITARIO,
+
             QUANTIDADE_ESTOQUE
+
         FROM PUBLIC.TB_PRODUTO
+
     )
 
+
     SELECT *
+
     FROM PRODUTO
 );

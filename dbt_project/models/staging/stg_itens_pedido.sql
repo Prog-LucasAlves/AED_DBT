@@ -1,13 +1,14 @@
-WITH ITENS_PEDIDO AS (
-    SELECT
-        ID_ITEM_PRODUTO,
-        ID_PEDIDO,
-        ID_PRODUTO,
-        QUANTIDADE,
-        PRECO_UNITARIO,
-        VALOR_SUBTOTAL
-    FROM PUBLIC.TB_ITENS_PEDIDO
-)
+with
+    itens_pedido as (
+        select
+            id_item_produto,
+            id_pedido,
+            id_produto,
+            quantidade,
+            preco_unitario,
+            valor_subtotal
+        from public.tb_itens_pedido
+    )
 
-SELECT *
-FROM ITENS_PEDIDO
+select *
+from itens_pedido

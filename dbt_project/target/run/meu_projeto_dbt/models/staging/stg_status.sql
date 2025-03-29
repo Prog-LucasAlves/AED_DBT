@@ -3,12 +3,19 @@ CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_STATUS__DBT_TMP
 
 AS (
     WITH STATUS AS (
+
         SELECT
+
             ID_STATUS,
+
             DESCRICAO_STATUS
+
         FROM PUBLIC.TB_STATUS
+
     )
 
+
     SELECT *
+
     FROM STATUS
 );

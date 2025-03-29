@@ -1,13 +1,5 @@
-WITH ESTADO AS (
-    SELECT
-        ID_ESTADO,
+with estado as (select id_estado, descricao_estado, sigla_estado from public.tb_estado)
 
-        DESCRICAO_ESTADO,
+select *
 
-        SIGLA_ESTADO
-
-    FROM PUBLIC.TB_ESTADO
-
-)
-
-SELECT * FROM ESTADO
+from estado

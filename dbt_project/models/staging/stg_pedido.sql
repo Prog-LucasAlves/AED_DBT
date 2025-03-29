@@ -1,17 +1,18 @@
-WITH PEDIDO AS (
-    SELECT
-        ID_PEDIDO,
-        ID_CLIENTE,
-        ID_FORMA_PAGAMENTO,
-        ID_CANAL_VENDA,
-        ID_STATUS,
-        DATA_PEDIDO,
-        SUBTOTAL,
-        FRETE,
-        TOTAL,
-        DATA_ENTREGA
-    FROM PUBLIC.TB_PEDIDO
-)
+with
+    pedido as (
+        select
+            id_pedido,
+            id_cliente,
+            id_forma_pagamento,
+            id_canal_venda,
+            id_status,
+            data_pedido,
+            subtotal,
+            frete,
+            total,
+            data_entrega
+        from public.tb_pedido
+    )
 
-SELECT *
-FROM PEDIDO
+select *
+from pedido

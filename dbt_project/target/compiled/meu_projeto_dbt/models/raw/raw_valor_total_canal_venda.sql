@@ -1,6 +1,6 @@
 with
     total_por_canal_venda as (
-        select cv.descricao_canal_venda, sum(p.total) as total  -- Mantém como número para cálculos
+        select cv.descricao_canal_venda, sum(p.total) as total
         from dbtvendas_82ea.public_staging.stg_pedido p
         inner join
             dbtvendas_82ea.public_staging.stg_canais_venda cv
@@ -10,7 +10,6 @@ with
 
 select
     descricao_canal_venda,
-    -- Conversão para string só aqui
     'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,
     round(
         (total * 100.0 / (select sum(total) from total_por_canal_venda))::numeric, 2

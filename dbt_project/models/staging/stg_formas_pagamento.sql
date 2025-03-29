@@ -1,9 +1,8 @@
-WITH FORMAS_PAGAMENTO AS (
-    SELECT
-        ID_FORMA_PAGAMENTO,
-        DESCRICAO_METODO_PAGAMENTO
-    FROM PUBLIC.TB_FORMAS_PAGAMENTO
-)
+with
+    formas_pagamento as (
+        select id_forma_pagamento, descricao_metodo_pagamento
+        from public.tb_formas_pagamento
+    )
 
-SELECT *
-FROM FORMAS_PAGAMENTO
+select *
+from formas_pagamento

@@ -1,9 +1,8 @@
-WITH EMAIL_MARKETING AS (
-    SELECT
-        ID_EMAIL_MARKETING,
-        DESCRICAO_EMAIL_MARKETING
-    FROM PUBLIC.TB_EMAIL_MARKETING
-)
+with
+    email_marketing as (
+        select id_email_marketing, descricao_email_marketing
+        from public.tb_email_marketing
+    )
 
-SELECT *
-FROM EMAIL_MARKETING
+select *
+from email_marketing

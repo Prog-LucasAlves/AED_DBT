@@ -1,9 +1,7 @@
-WITH ESTADO_CIVIL AS (
-    SELECT
-        ID_ESTADO_CIVIL,
-        DESCRICAO_ESTADO_CIVIL
-    FROM PUBLIC.TB_ESTADO_CIVIL
-)
+with
+    estado_civil as (
+        select id_estado_civil, descricao_estado_civil from public.tb_estado_civil
+    )
 
-SELECT *
-FROM ESTADO_CIVIL
+select *
+from estado_civil
