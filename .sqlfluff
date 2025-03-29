@@ -1,6 +1,6 @@
 [sqlfluff]
 templater = python
-dialect = postgres
+dialect = bigquery
 runaway_limit = 10
 max_line_length = 80
 indent_unit = space
