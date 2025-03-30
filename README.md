@@ -39,11 +39,11 @@ AED_DBT
     ├── crud.py                   # Funções para criar, ler, atualizar e deletar dados (CRUD)
     ├── database.py               # Configuração do banco de dados (SQLAlchemy, conexões)
     ├── models.py                 # Definição dos modelos do banco de dados (ORM)
+├── utils                         # Reservado para funções auxiliares.
 ├── .flake8                       # Configuração flake8
 ├── .gitignore                    # Arquivos a serem ignorados
 ├── pre-commit-config.yaml        # Configuração precommit
 ├── .python-version               # Versão do Python utilizada no projeto
-├── mkdocs.yml                    # Configuração do MkDocs
 ├── pyproject.toml                # Lista de dependências do projeto
 ├── README.md                     # Documentação do projeto
 ```
@@ -209,29 +209,47 @@ Exemplo de um modelo:
 o modelo `raw_valor_total_canal_vendas.sql` calcula o valor total de vendas por canal e determina a participação percentual de cada canal no total das vendas.
 
 ```sql
-with total_por_canal_venda as (SELECT cv.descricao_canal_venda,
-                                      sum(p.total) as total
-                               FROM   {{ ref('stg_pedido') }} p join {{ ref('stg_canais_venda') }} cv
-                                       ON p.id_canal_venda = cv.id_canal_venda
-                               GROUP BY cv.descricao_canal_venda)
-SELECT descricao_canal_venda,
-       'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,
-       round((total * 100.0 / (SELECT sum(total)
-                        FROM   total_por_canal_venda))::numeric, 2) as percentual
-FROM   total_por_canal_venda
-ORDER BY total desc
+with
+    total_por_canal_venda as (
+        select cv.descricao_canal_venda, sum(p.total) as total
+        from {{ ref("raw_pedido") }} p
+        join {{ ref("stg_canais_venda") }} cv on p.id_canal_venda = cv.id_canal_venda
+        group by cv.descricao_canal_venda
+    )
+select
+    descricao_canal_venda,
+    'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,
+    round(
+        (total * 100.0 / (select sum(total) from total_por_canal_venda))::numeric, 2
+    ) as percentual
+from total_por_canal_venda
+order by total desc
+
 ```
 
 ## 📊 Models
 
 ### - 🗂️ `raw`
 
-1. [raw_valor_total_canal_vendas.sql](...)
+1. [raw_pedido.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_pedido.sql)
+2. [raw_ticket_medio.cliente.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_ticket_medio_cliente.sql)
+3. [raw_valor_total_canal_vendas.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_valor_total_forma_pagamento.sql)
+4. [raw_vaçor_total_forma_pagamento.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_valor_total_forma_pagamento.sql)
 
 ### - 📁 `staging`
 
-1. [stg_canais_venda.sql](...)
-2. [stg_status.sql](...)
+1. [stg_canais_venda.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_canais_venda.sql)
+2. [stg_categoria.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_categoria.sql)
+3. [stg_cliente.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_cliente.sql)
+4. [stg_email_marketing.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_email_marketing.sql)
+5. [stg_estado_civil.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_estado_civil.sql)
+6. [stg_estado.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_estado.sql)
+7. [stg_formas_pagamento.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_formas_pagamento.sql)
+8. [stg_genero.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_genero.sql)
+9. [stg_itens_pedido.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_itens_pedido.sql)
+10. [stg_pedido.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_pedido.sql)
+11. [stg_produto.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_produto.sql)
+12. [stg_status.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/staging/stg_status.sql)
 
 ## ✅ Objetivos do Projeto
 

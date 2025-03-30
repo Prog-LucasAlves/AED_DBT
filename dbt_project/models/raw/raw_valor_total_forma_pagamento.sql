@@ -1,7 +1,7 @@
 with
     total_por_forma_pagamento as (
         select fp.descricao_metodo_pagamento, sum(p.total) as total
-        from {{ ref("stg_pedido") }} p
+        from {{ ref("raw_pedido") }} p
         join
             {{ ref("stg_formas_pagamento") }} fp
             on p.id_forma_pagamento = fp.id_forma_pagamento

@@ -1,7 +1,7 @@
 with
     total_por_canal_venda as (
         select cv.descricao_canal_venda, sum(p.total) as total
-        from {{ ref("stg_pedido") }} p
+        from {{ ref("raw_pedido") }} p
         join {{ ref("stg_canais_venda") }} cv on p.id_canal_venda = cv.id_canal_venda
         group by cv.descricao_canal_venda
     )
@@ -13,3 +13,5 @@ select
     ) as percentual
 from total_por_canal_venda
 order by total desc
+
+--  raw_pedido
