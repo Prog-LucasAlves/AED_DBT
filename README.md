@@ -231,10 +231,12 @@ order by total desc
 
 ### - 🗂️ `raw`
 
-1. [raw_pedido.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_pedido.sql)
-2. [raw_ticket_medio.cliente.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_ticket_medio_cliente.sql)
-3. [raw_valor_total_canal_vendas.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_valor_total_forma_pagamento.sql)
-4. [raw_vaçor_total_forma_pagamento.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_valor_total_forma_pagamento.sql)
+1. [raw_cliente_pedido_pendente.sql](...)
+2. [raw_faturamento_mensal.sql](...)
+3. [raw_pedido.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_pedido.sql)
+4. [raw_ticket_medio.cliente.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_ticket_medio_cliente.sql)
+5. [raw_valor_total_canal_vendas.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_valor_total_forma_pagamento.sql)
+6. [raw_vaçor_total_forma_pagamento.sql](https://github.com/Prog-LucasAlves/AED_DBT/blob/main/dbt_project/models/raw/raw_valor_total_forma_pagamento.sql)
 
 ### - 📁 `staging`
 
