@@ -14,7 +14,7 @@ with
             endereco,
             id_estado,
             id_email_marketing
-        from public.tb_cliente
+        from public_data.tb_cliente
     )
 
 select *
