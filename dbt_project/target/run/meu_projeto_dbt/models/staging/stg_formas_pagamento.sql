@@ -1,21 +1,19 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_FORMAS_PAGAMENTO__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_formas_pagamento__dbt_tmp"
 
 
-AS (
-    WITH FORMAS_PAGAMENTO AS (
+  as (
+    with
 
-        SELECT
+    formas_pagamento as (
 
-            ID_FORMA_PAGAMENTO,
+        select id_forma_pagamento, descricao_metodo_pagamento
 
-            DESCRICAO_METODO_PAGAMENTO
-
-        FROM PUBLIC.TB_FORMAS_PAGAMENTO
+        from public.tb_formas_pagamento
 
     )
 
 
-    SELECT *
+select *
 
-    FROM FORMAS_PAGAMENTO
-);
+from formas_pagamento
+  );

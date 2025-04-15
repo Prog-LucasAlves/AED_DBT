@@ -1,4 +1,5 @@
 with
+
     cliente as (
 
         select

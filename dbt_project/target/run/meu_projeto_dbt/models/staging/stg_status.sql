@@ -1,21 +1,11 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_STATUS__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_status__dbt_tmp"
 
 
-AS (
-    WITH STATUS AS (
-
-        SELECT
-
-            ID_STATUS,
-
-            DESCRICAO_STATUS
-
-        FROM PUBLIC.TB_STATUS
-
-    )
+  as (
+    with status as (select id_status, descricao_status from public.tb_status)
 
 
-    SELECT *
+select *
 
-    FROM STATUS
-);
+from status
+  );

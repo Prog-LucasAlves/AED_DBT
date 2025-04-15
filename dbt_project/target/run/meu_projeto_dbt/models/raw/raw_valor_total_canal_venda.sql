@@ -1,26 +1,24 @@
-CREATE TABLE DBTVENDAS_82EA.PUBLIC_RAW.RAW_VALOR_TOTAL_CANAL_VENDA__DBT_TMP
+  create  table "dbtvendas_82ea"."public_raw"."raw_valor_total_canal_venda__dbt_tmp"
 
 
-AS
+    as
 
-(
-    WITH TOTAL_POR_CANAL_VENDA AS (
-        SELECT
-            CV.DESCRICAO_CANAL_VENDA,
-            sum(P.TOTAL) AS TOTAL
-        FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_PEDIDO P
-        INNER JOIN DBTVENDAS_82EA.PUBLIC_STAGING.STG_CANAIS_VENDA CV
-            ON P.ID_CANAL_VENDA = CV.ID_CANAL_VENDA
-        GROUP BY CV.DESCRICAO_CANAL_VENDA
+  (
+    with
+    total_por_canal_venda as (
+        select cv.descricao_canal_venda, sum(p.total) as total
+        from "dbtvendas_82ea"."public_raw"."raw_pedido" p
+        join "dbtvendas_82ea"."public_staging"."stg_canais_venda" cv on p.id_canal_venda = cv.id_canal_venda
+        group by cv.descricao_canal_venda
     )
+select
+    descricao_canal_venda,
+    'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,
+    round(
+        (total * 100.0 / (select sum(total) from total_por_canal_venda))::numeric, 2
+    ) as percentual
+from total_por_canal_venda
+order by total desc
 
-    SELECT
-        DESCRICAO_CANAL_VENDA,
-        'R$' || to_char(TOTAL, 'FM999G999G999D99') AS TOTAL_FORMATADO,
-        round((TOTAL * 100.0 / (
-            SELECT sum(TOTAL)
-            FROM TOTAL_POR_CANAL_VENDA
-        ))::numeric, 2) AS PERCENTUAL
-    FROM TOTAL_POR_CANAL_VENDA
-    ORDER BY TOTAL DESC
-);
+-- raw_pedido
+  );

@@ -1,21 +1,11 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_GENERO__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_genero__dbt_tmp"
 
 
-AS (
-    WITH GENERO AS (
-
-        SELECT
-
-            ID_GENERO,
-
-            DESCRICAO_GENERO
-
-        FROM PUBLIC.TB_GENERO
-
-    )
+  as (
+    with genero as (select id_genero, descricao_genero from public.tb_genero)
 
 
-    SELECT *
+select *
 
-    FROM GENERO
-);
+from genero
+  );
