@@ -7,7 +7,7 @@ with
             quantidade,
             preco_unitario,
             valor_subtotal
-        from public.tb_itens_pedido
+        from public_data.tb_itens_pedido
     )
 
 select *

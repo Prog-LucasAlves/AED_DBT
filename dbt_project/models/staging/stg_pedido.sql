@@ -11,7 +11,7 @@ with
             frete,
             total,
             data_entrega
-        from public.tb_pedido
+        from public_data.tb_pedido
     )
 
 select *
