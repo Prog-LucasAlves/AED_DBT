@@ -1,17 +1,14 @@
-with
-    total_por_canal_venda as (
-        select cv.descricao_canal_venda, sum(p.total) as total
-        from {{ ref("raw_pedido") }} p
-        join {{ ref("stg_canais_venda") }} cv on p.id_canal_venda = cv.id_canal_venda
-        group by cv.descricao_canal_venda
-    )
-select
-    descricao_canal_venda,
-    'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,
-    round(
-        (total * 100.0 / (select sum(total) from total_por_canal_venda))::numeric, 2
-    ) as percentual
-from total_por_canal_venda
-order by total desc
+WITH total_por_canal_venda AS
+  (SELECT cv.descricao_canal_venda,
+          sum(p.total) AS total -- Total por canal de venda
 
---  raw_pedido
+   FROM {{ ref("raw_pedido") }} p
+   JOIN {{ ref("stg_canais_venda") }} cv ON p.id_canal_venda = cv.id_canal_venda
+   GROUP BY cv.descricao_canal_venda)
+SELECT descricao_canal_venda,
+       to_char(total, 'L999G999G999D99') AS total_formatado, -- Formata o total com símbolo de moeda
+ round((total * 100.0 / nullif(
+                                 (SELECT sum(total)
+                                  FROM total_por_canal_venda), 0))::numeric, 2) AS percentual -- Percentual do total
+FROM total_por_canal_venda
+ORDER BY total DESC -- Ordenar por total decrescente

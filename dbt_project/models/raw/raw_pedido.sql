@@ -1,3 +1,8 @@
-with pedido as (select * from {{ ref("stg_pedido") }} where total > 0)
-select *
-from pedido
+
+WITH pedido AS
+  (SELECT *
+   FROM {{ ref("stg_pedido") }}
+   WHERE total > 0) -- Filtra pedidos com valOR maiOR que 0
+
+SELECT *
+FROM pedido
