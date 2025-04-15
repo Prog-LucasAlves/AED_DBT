@@ -1,21 +1,19 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_EMAIL_MARKETING__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_email_marketing__dbt_tmp"
 
 
-AS (
-    WITH EMAIL_MARKETING AS (
+  as (
+    with
 
-        SELECT
+    email_marketing as (
 
-            ID_EMAIL_MARKETING,
+        select id_email_marketing, descricao_email_marketing
 
-            DESCRICAO_EMAIL_MARKETING
-
-        FROM PUBLIC.TB_EMAIL_MARKETING
+        from public.tb_email_marketing
 
     )
 
 
-    SELECT *
+select *
 
-    FROM EMAIL_MARKETING
-);
+from email_marketing
+  );

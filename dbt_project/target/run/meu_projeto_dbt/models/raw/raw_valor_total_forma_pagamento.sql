@@ -1,26 +1,24 @@
-CREATE TABLE DBTVENDAS_82EA.PUBLIC_RAW.RAW_VALOR_TOTAL_FORMA_PAGAMENTO__DBT_TMP
+  create  table "dbtvendas_82ea"."public_raw"."raw_valor_total_forma_pagamento__dbt_tmp"
 
 
-AS
+    as
 
-(
-    WITH TOTAL_POR_FORMA_PAGAMENTO AS (
-        SELECT
-            FP.DESCRICAO_METODO_PAGAMENTO,
-            sum(P.TOTAL) AS TOTAL
-        FROM DBTVENDAS_82EA.PUBLIC_STAGING.STG_PEDIDO P
-        INNER JOIN DBTVENDAS_82EA.PUBLIC_STAGING.STG_FORMAS_PAGAMENTO FP
-            ON P.ID_FORMA_PAGAMENTO = FP.ID_FORMA_PAGAMENTO
-        GROUP BY FP.DESCRICAO_METODO_PAGAMENTO
+  (
+    with
+    total_por_forma_pagamento as (
+        select fp.descricao_metodo_pagamento, sum(p.total) as total
+        from "dbtvendas_82ea"."public_raw"."raw_pedido" p
+        join
+            "dbtvendas_82ea"."public_staging"."stg_formas_pagamento" fp
+            on p.id_forma_pagamento = fp.id_forma_pagamento
+        group by fp.descricao_metodo_pagamento
     )
-
-    SELECT
-        DESCRICAO_METODO_PAGAMENTO,
-        'R$' || to_char(TOTAL, 'FM999G999G999D99') AS TOTAL_FORMATADO,
-        round((TOTAL * 100.0 / (
-            SELECT sum(TOTAL)
-            FROM TOTAL_POR_FORMA_PAGAMENTO
-        ))::numeric, 2) AS PERCENTUAL
-    FROM TOTAL_POR_FORMA_PAGAMENTO
-    ORDER BY TOTAL DESC
-);
+select
+    descricao_metodo_pagamento,
+    'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,
+    round(
+        (total * 100.0 / (select sum(total) from total_por_forma_pagamento))::numeric, 2
+    ) as percentual
+from total_por_forma_pagamento
+order by total desc
+  );

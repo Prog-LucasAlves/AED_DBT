@@ -1,29 +1,31 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_ITENS_PEDIDO__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_itens_pedido__dbt_tmp"
 
 
-AS (
-    WITH ITENS_PEDIDO AS (
+  as (
+    with
 
-        SELECT
+    itens_pedido as (
 
-            ID_ITEM_PRODUTO,
+        select
 
-            ID_PEDIDO,
+            id_item_produto,
 
-            ID_PRODUTO,
+            id_pedido,
 
-            QUANTIDADE,
+            id_produto,
 
-            PRECO_UNITARIO,
+            quantidade,
 
-            VALOR_SUBTOTAL
+            preco_unitario,
 
-        FROM PUBLIC.TB_ITENS_PEDIDO
+            valor_subtotal
+
+        from public.tb_itens_pedido
 
     )
 
 
-    SELECT *
+select *
 
-    FROM ITENS_PEDIDO
-);
+from itens_pedido
+  );

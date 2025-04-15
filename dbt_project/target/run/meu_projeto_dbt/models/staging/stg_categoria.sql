@@ -1,21 +1,11 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_CATEGORIA__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_categoria__dbt_tmp"
 
 
-AS (
-    WITH CATEGORIA AS (
-
-        SELECT
-
-            ID_CATEGORIA,
-
-            DESCRICAO_CATEGORIA
-
-        FROM PUBLIC.TB_CATEGORIA
-
-    )
+  as (
+    with categoria as (select id_categoria, descricao_categoria from public.tb_categoria)
 
 
-    SELECT *
+select *
 
-    FROM CATEGORIA
-);
+from categoria
+  );

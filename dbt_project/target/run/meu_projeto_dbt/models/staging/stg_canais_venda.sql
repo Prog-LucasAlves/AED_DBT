@@ -1,21 +1,17 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_CANAIS_VENDA__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_canais_venda__dbt_tmp"
 
 
-AS (
-    WITH CANAIS_VENDA AS (
+  as (
+    with
 
-        SELECT
+    canais_venda as (
 
-            ID_CANAL_VENDA,
-
-            DESCRICAO_CANAL_VENDA
-
-        FROM PUBLIC.TB_CANAIS_VENDA
+        select id_canal_venda, descricao_canal_venda from public.tb_canais_venda
 
     )
 
 
-    SELECT *
+select *
 
-    FROM CANAIS_VENDA
-);
+from canais_venda
+  );

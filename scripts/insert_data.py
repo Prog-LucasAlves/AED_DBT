@@ -1,5 +1,5 @@
 import random
-from src.database import SessionLocal, engine
+from src.database import SessionLocal, engine, create_schema_if_not_exists
 from src import models, crud
 from utils import list_auxiliar
 from faker import Faker
@@ -8,6 +8,9 @@ from tqdm import tqdm
 from multiprocessing import Pool
 
 models.Base.metadata.create_all(bind=engine)
+
+# Criar o schema se não existir
+create_schema_if_not_exists()
 
 fake = Faker("pt_BR")
 
@@ -105,7 +108,7 @@ def pop_db():
 
         # Criando produtos em batch
         produtos = []
-        for categoria_name, produtos_lista in list_auxiliar.PRODUTOS_POR_CATEGORIA2.items():
+        for categoria_name, produtos_lista in list_auxiliar.PRODUTOS_POR_CATEGORIA.items():
             categoria_id = list_categoria[list_auxiliar.CATEGORIAS.index(categoria_name)]
             for produto_name, preco in produtos_lista.items():
                 produtos.append({

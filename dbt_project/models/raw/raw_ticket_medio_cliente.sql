@@ -1,19 +1,28 @@
 -- Total de pedidos e ticket medio por cliente com status de entrega como ENTREGUE
-with
-    ticket_medio_por_cliente as (
-        select
-            c.id_cliente,
+WITH ticket_medio_por_cliente AS
+  (SELECT c.id_cliente,
+          c.primeiro_nome,
+          c.email,
+          c.telefone,
+          count(p.id_pedido) AS qtd_pedidos, -- Total de pedidos
+ round(cast(avg(p.total) AS numeric), 2) AS ticket_medio -- Ticket mésio
+
+   FROM {{ ref("stg_cliente") }} c
+   LEFT JOIN {{ ref("raw_pedido") }} p ON c.id_cliente = p.id_cliente
+   WHERE p.id_status = 4 -- Filtrando por status de entrega como ENTREGUE
+
+   GROUP BY c.id_cliente,
             c.primeiro_nome,
             c.email,
-            c.telefone,
-            count(p.id_pedido) as qtd_pedidos,
-            round(cast(avg(p.total) as numeric), 2) as ticket_medio
-        from {{ ref("stg_cliente") }} c
-        left join {{ ref("raw_pedido") }} p on c.id_cliente = p.id_cliente
-        where p.id_status = 4
-        group by c.id_cliente, c.primeiro_nome, c.email, c.telefone
-    )
-select *
-from ticket_medio_por_cliente
-where ticket_medio is not null
-order by ticket_medio desc
+            c.telefone -- Agrupando por id_cliente, primeiro_nome, email, telefone
+)
+SELECT
+  id_cliente,
+  primeiro_nome,
+  email,
+  telefone,
+  qtd_pedidos,
+  'R$' || TO_CHAR(ticket_medio, 'FM999G999G999D99') AS ticket_medio -- Formata o total para moeda brasileira
+FROM ticket_medio_por_cliente
+WHERE ticket_medio IS NOT NULL -- Filtrando por ticket_medio não nulo
+ORDER BY id_cliente ASC -- Ordenando por ticket_medio em ordem decrescente

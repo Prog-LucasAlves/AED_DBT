@@ -1,13 +1,12 @@
 with
     total_por_forma_pagamento as (
         select fp.descricao_metodo_pagamento, sum(p.total) as total
-        from dbtvendas_82ea.public_staging.stg_pedido p
-        inner join
-            dbtvendas_82ea.public_staging.stg_formas_pagamento fp
+        from "dbtvendas_82ea"."public_raw"."raw_pedido" p
+        join
+            "dbtvendas_82ea"."public_staging"."stg_formas_pagamento" fp
             on p.id_forma_pagamento = fp.id_forma_pagamento
         group by fp.descricao_metodo_pagamento
     )
-
 select
     descricao_metodo_pagamento,
     'R$' || to_char(total, 'FM999G999G999D99') as total_formatado,

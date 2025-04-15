@@ -1,21 +1,17 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_ESTADO_CIVIL__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_estado_civil__dbt_tmp"
 
 
-AS (
-    WITH ESTADO_CIVIL AS (
+  as (
+    with
 
-        SELECT
+    estado_civil as (
 
-            ID_ESTADO_CIVIL,
-
-            DESCRICAO_ESTADO_CIVIL
-
-        FROM PUBLIC.TB_ESTADO_CIVIL
+        select id_estado_civil, descricao_estado_civil from public.tb_estado_civil
 
     )
 
 
-    SELECT *
+select *
 
-    FROM ESTADO_CIVIL
-);
+from estado_civil
+  );

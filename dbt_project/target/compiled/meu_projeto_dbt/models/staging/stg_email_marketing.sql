@@ -1,4 +1,5 @@
 with
+
     email_marketing as (
 
         select id_email_marketing, descricao_email_marketing

@@ -1,14 +1,10 @@
-CREATE TABLE DBTVENDAS_82EA.PUBLIC_RAW.RAW_PEDIDO__DBT_TMP
+  create  table "dbtvendas_82ea"."public_raw"."raw_pedido__dbt_tmp"
 
 
-AS
+    as
 
-(
-    WITH PEDIDO AS (
-        SELECT * FROM
-            DBTVENDAS_82EA.PUBLIC_STAGING.STG_PEDIDO
-        WHERE TOTAL > 0
-    )
-
-    SELECT * FROM PEDIDO
-);
+  (
+    with pedido as (select * from "dbtvendas_82ea"."public_staging"."stg_pedido" where total > 0)
+select *
+from pedido
+  );

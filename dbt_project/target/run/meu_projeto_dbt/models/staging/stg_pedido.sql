@@ -1,37 +1,39 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_PEDIDO__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_pedido__dbt_tmp"
 
 
-AS (
-    WITH PEDIDO AS (
+  as (
+    with
 
-        SELECT
+    pedido as (
 
-            ID_PEDIDO,
+        select
 
-            ID_CLIENTE,
+            id_pedido,
 
-            ID_FORMA_PAGAMENTO,
+            id_cliente,
 
-            ID_CANAL_VENDA,
+            id_forma_pagamento,
 
-            ID_STATUS,
+            id_canal_venda,
 
-            DATA_PEDIDO,
+            id_status,
 
-            SUBTOTAL,
+            data_pedido,
 
-            FRETE,
+            subtotal,
 
-            TOTAL,
+            frete,
 
-            DATA_ENTREGA
+            total,
 
-        FROM PUBLIC.TB_PEDIDO
+            data_entrega
+
+        from public.tb_pedido
 
     )
 
 
-    SELECT *
+select *
 
-    FROM PEDIDO
-);
+from pedido
+  );

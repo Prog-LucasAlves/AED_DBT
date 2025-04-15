@@ -1,4 +1,5 @@
 with
+
     formas_pagamento as (
 
         select id_forma_pagamento, descricao_metodo_pagamento

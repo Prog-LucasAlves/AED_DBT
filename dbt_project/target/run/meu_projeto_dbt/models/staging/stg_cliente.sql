@@ -1,43 +1,45 @@
-CREATE VIEW DBTVENDAS_82EA.PUBLIC_STAGING.STG_CLIENTE__DBT_TMP
+  create view "dbtvendas_82ea"."public_staging"."stg_cliente__dbt_tmp"
 
 
-AS (
-    WITH CLIENTE AS (
+  as (
+    with
 
-        SELECT
+    cliente as (
 
-            ID_CLIENTE,
+        select
 
-            PRIMEIRO_NOME,
+            id_cliente,
 
-            SOBRENOME,
+            primeiro_nome,
 
-            ID_GENERO,
+            sobrenome,
 
-            ID_ESTADO_CIVIL,
+            id_genero,
 
-            DATA_NASCIMENTO,
+            id_estado_civil,
 
-            CPF,
+            data_nascimento,
 
-            RG,
+            cpf,
 
-            EMAIL,
+            rg,
 
-            TELEFONE,
+            email,
 
-            ENDERECO,
+            telefone,
 
-            ID_ESTADO,
+            endereco,
 
-            ID_EMAIL_MARKETING
+            id_estado,
 
-        FROM PUBLIC.TB_CLIENTE
+            id_email_marketing
+
+        from public.tb_cliente
 
     )
 
 
-    SELECT *
+select *
 
-    FROM CLIENTE
-);
+from cliente
+  );
