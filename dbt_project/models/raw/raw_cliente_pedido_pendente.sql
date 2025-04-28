@@ -60,7 +60,7 @@ WITH cliente_pedido_pendente AS (
         c.id_cliente, c.primeiro_nome, c.email,
         p.id_pedido, p.data_pedido, p.total,
         cv.descricao_canal_venda
-)
+    )
 SELECT
     id_cliente,
     primeiro_nome,

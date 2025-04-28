@@ -1,21 +1,22 @@
 -- Total de pedidos e ticket medio por cliente com status de entrega como ENTREGUE
-WITH ticket_medio_por_cliente AS(
-    SELECT
-        c.id_cliente,
-        c.primeiro_nome,
-        c.email,
-        c.telefone,
-        count(p.id_pedido) AS qtd_pedidos, -- Total de pedidos
-        round(cast(avg(p.total) AS numeric), 2) AS ticket_medio -- Ticket mésio
-
-   FROM {{ ref("stg_cliente") }} c
-   LEFT JOIN {{ ref("raw_pedido") }} p ON c.id_cliente = p.id_cliente
-   WHERE p.id_status = 4 -- Filtrando por status de entrega como ENTREGUE
-
-   GROUP BY c.id_cliente,
+WITH
+    ticket_medio_por_cliente AS(
+        SELECT
+            c.id_cliente,
             c.primeiro_nome,
             c.email,
-            c.telefone -- Agrupando por id_cliente, primeiro_nome, email, telefone
+            c.telefone,
+            count(p.id_pedido) AS qtd_pedidos, -- Total de pedidos
+            round(cast(avg(p.total) AS numeric), 2) AS ticket_medio -- Ticket mésio
+
+        FROM {{ ref("stg_cliente") }} c
+        LEFT JOIN {{ ref("raw_pedido") }} p ON c.id_cliente = p.id_cliente
+        WHERE p.id_status = 4 -- Filtrando por status de entrega como ENTREGUE
+
+        GROUP BY c.id_cliente,
+                 c.primeiro_nome,
+                 c.email,
+                 c.telefone -- Agrupando por id_cliente, primeiro_nome, email, telefone
 )
 SELECT
     id_cliente,

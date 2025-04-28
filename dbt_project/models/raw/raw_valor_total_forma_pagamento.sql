@@ -1,3 +1,4 @@
+-- Modelo para calcular o valor total por forma de pagamento
 WITH
     total_por_forma_pagamento AS(
         SELECT
