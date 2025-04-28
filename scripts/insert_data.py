@@ -47,7 +47,11 @@ def criar_pedidos_batch(batch_data):
 
         frete = round(random.uniform(7, 95), 2) if subtotal < 400 else 0
         total = subtotal + frete
+        days = random.randint(3, 51)
+        data_entrega = (data_pedido + pd.Timedelta(days=days)) if batch_data['list_status_envio'].get(id_status) == "Entregue" else None
+        '''
         data_entrega = (fake.date_between(start_date=data_pedido, end_date="today") + pd.Timedelta(days=18)) if batch_data['list_status_envio'].get(id_status) == "Entregue" else None
+        '''
 
         crud.update_pedido_totais(db, pedido.id_pedido, subtotal, frete, total, data_entrega)
 
@@ -100,7 +104,7 @@ def pop_db():
                 "id_estado": random.choice(list_estado),
                 "id_email_marketing": random.choice(list_email_marketing),
             }
-            for _ in tqdm(range(15000), desc="Criando clientes")
+            for _ in tqdm(range(80000), desc="Criando clientes")
         ]
         db.bulk_insert_mappings(models.Cliente, clientes)
         db.commit()
@@ -125,7 +129,7 @@ def pop_db():
 
         # Criando pedidos em paralelo
         num_processos = 12  # Ajuste conforme o hardware
-        batch_size = 10000  # Número de pedidos por processo
+        batch_size = 30000  # Número de pedidos por processo
 
         batches = []
         for i in range(num_processos):
