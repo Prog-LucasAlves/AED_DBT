@@ -1,10 +1,17 @@
-  create  table "dbtvendas_82ea"."public_raw"."raw_pedido__dbt_tmp"
+
+
+
+
+  create  table "dbt_q4iu"."public_raw"."raw_pedido__dbt_tmp"
 
 
     as
 
   (
-    with pedido as (select * from "dbtvendas_82ea"."public_staging"."stg_pedido" where total > 0)
-select *
-from pedido
+    WITH pedido AS (
+    SELECT *
+    FROM "dbt_q4iu"."public_staging"."stg_pedido"
+    WHERE total > 0) -- Filtra pedidos com valOR maiOR que 0
+
+SELECT * FROM pedido
   );
