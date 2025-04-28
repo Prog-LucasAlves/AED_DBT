@@ -1,15 +1,14 @@
-with
-    faturamento_mensal as (
-        select
-            to_char(date_trunc('month', data_pedido), 'YYYY-MM') as mes,
-            'R$ ' || to_char(sum(total), 'FM999G999G999D99') as total_faturado,
-            'R$ ' || to_char(
-                sum(sum(total)) over (order by date_trunc('month', data_pedido)),
-                'FM999G999G999D99'
-            ) as total_faturado_acumulado
-        from "dbtvendas_82ea"."public_raw"."raw_pedido"
-        group by date_trunc('month', data_pedido)
-        order by mes
+-- Faturamento mensal com formatação de moeda e total acumulado
+WITH
+    faturamento_mensal AS (
+        SELECT
+            to_char(date_trunc('month', data_pedido), 'YYYY-MM') AS mes, -- Formatação para o mês e ano
+            'R$ ' || to_char(sum(total), 'FM999G999G999D99') AS total_faturado, -- Formatação para o total do mês
+            'R$ ' || to_char(sum(sum(total)) OVER (
+                                        ORDER BY date_trunc('month', data_pedido)), 'FM999G999G999D99') AS total_faturado_acumulado
+        FROM "dbt_q4iu"."public_raw"."raw_pedido"
+        GROUP BY date_trunc('month', data_pedido) -- Agrupamento por mês
+        ORDER BY mes
     )
-select *
-from faturamento_mensal
+
+SELECT * FROM faturamento_mensal

@@ -1,6 +1,6 @@
 -- Faturamento mensal com formatação de moeda e total acumulado
 WITH
-    faturamento_mensal AS(
+    faturamento_mensal AS (
         SELECT
             to_char(date_trunc('month', data_pedido), 'YYYY-MM') AS mes, -- Formatação para o mês e ano
             'R$ ' || to_char(sum(total), 'FM999G999G999D99') AS total_faturado, -- Formatação para o total do mês
@@ -11,5 +11,4 @@ WITH
         ORDER BY mes
     )
 
-SELECT *
-FROM faturamento_mensal
+SELECT * FROM faturamento_mensal

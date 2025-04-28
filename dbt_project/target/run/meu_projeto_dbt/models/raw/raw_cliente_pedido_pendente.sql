@@ -2,7 +2,7 @@
 
 
 
-  create  table "dbtvendas_82ea"."public_raw"."raw_cliente_pedido_pendente__dbt_tmp"
+  create  table "dbt_q4iu"."public_raw"."raw_cliente_pedido_pendente__dbt_tmp"
 
 
     as
@@ -55,14 +55,14 @@ WITH cliente_pedido_pendente AS (
             END
         ) OVER (PARTITION BY c.id_cliente) AS valor_desconto
 
-    FROM "dbtvendas_82ea"."public_staging"."stg_cliente" c
-    INNER JOIN "dbtvendas_82ea"."public_raw"."raw_pedido" p
+    FROM "dbt_q4iu"."public_staging"."stg_cliente" c
+    INNER JOIN "dbt_q4iu"."public_raw"."raw_pedido" p
         ON c.id_cliente = p.id_cliente
-    INNER JOIN "dbtvendas_82ea"."public_staging"."stg_canais_venda" cv
+    INNER JOIN "dbt_q4iu"."public_staging"."stg_canais_venda" cv
         ON p.id_canal_venda = cv.id_canal_venda
-    INNER JOIN "dbtvendas_82ea"."public_staging"."stg_itens_pedido" it
+    INNER JOIN "dbt_q4iu"."public_staging"."stg_itens_pedido" it
         ON p.id_pedido = it.id_pedido
-    INNER JOIN "dbtvendas_82ea"."public_staging"."stg_produto" pr
+    INNER JOIN "dbt_q4iu"."public_staging"."stg_produto" pr
         ON it.id_produto = pr.id_produto
     WHERE p.id_status = 1
     AND p.data_pedido >= CURRENT_DATE - INTERVAL '7 days'
@@ -70,7 +70,7 @@ WITH cliente_pedido_pendente AS (
         c.id_cliente, c.primeiro_nome, c.email,
         p.id_pedido, p.data_pedido, p.total,
         cv.descricao_canal_venda
-)
+    )
 SELECT
     id_cliente,
     primeiro_nome,
